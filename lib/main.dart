@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:twitter_clone/home/tabbar_view.dart';
+import 'home/home.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,8 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Twitter',
-      home: const Home(),
+      home: const TwTabbarView(),
       theme: ThemeData.light().copyWith(
         tabBarTheme: const TabBarTheme(
             labelColor: CupertinoColors.activeBlue,
