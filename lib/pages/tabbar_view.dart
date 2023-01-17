@@ -57,7 +57,12 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       initialIndex: initialIndex,
       length: 4,
       child: Scaffold(
-        drawer: Drawer(),
+        drawer: Drawer(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [_navbarHeaderCard, _divider, _navbarItemList, _divider],
+          ),
+        ),
         bottomNavigationBar: _bottomAppBar,
         body: SafeArea(
           child: Column(
@@ -186,7 +191,77 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         color: CupertinoColors.activeBlue,
         height: 20,
       );
+  Widget get _navBarHeaderListTile => ListTile(
+        trailing: const Icon(Icons.more_horiz_outlined),
+        title: SizedBox(
+          height: 110,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(avatarUrl),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Alihan Gedik'),
+                  const Text('@alihangedik'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    child: Row(
+                      children: const [
+                        Text('241 Takip Edilen'),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text('39 Takipçi'),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
 
+  Widget get _navbarHeaderCard => Card(
+        elevation: 0,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: _navBarHeaderListTile,
+      );
+  Widget _navbarItems(String title) => Column(
+        children: [
+          ListTile(
+            leading: const Icon(
+              Icons.list_alt_rounded,
+              size: 30,
+            ),
+            title: Text(title),
+          )
+        ],
+      );
+
+  Widget get _navbarItemList => ListView(
+        shrinkWrap: true,
+        children: [
+          _navbarItems('Profil'),
+          _navbarItems('Konular'),
+          _navbarItems('Yer İşaretleri'),
+          _navbarItems('Listeler'),
+          _navbarItems('Twitter Çevresi'),
+        ],
+      );
+
+  Widget get _divider => Divider(
+        endIndent: 40,
+        indent: 20,
+      );
   final TextStyle titleTextStyle =
       const TextStyle(fontWeight: FontWeight.w800, color: Colors.black);
 }
