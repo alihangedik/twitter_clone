@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:twitter_clone/home/search.dart';
+import 'package:twitter_clone/pages/search.dart';
 import 'package:twitter_clone/icons.dart';
 
 import 'home.dart';
+import 'notifications.dart';
 
 class TwTabbarView extends StatefulWidget {
   const TwTabbarView({super.key});
@@ -65,7 +66,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
                   children: [
                     Home(_scrollController),
                     Search(_scrollController),
-                    const Text('data'),
+                    Notifications(_scrollController),
                     const Text('data'),
                   ],
                 ),
@@ -89,36 +90,41 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   //     );
 
   Widget get _appBar => AppBar(
+        shape:
+            const Border(bottom: BorderSide(color: Colors.black12, width: 0.5)),
         leading: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: CircleAvatar(
             backgroundImage: NetworkImage(avatarUrl),
           ),
         ),
-        centerTitle: true,
+        centerTitle: currentIndex == 2 ? false : true,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SvgPicture.string(
-              currentIndex == 1 ? AppIcons.setting : AppIcons.storm,
+              currentIndex == 1
+                  ? AppIcons.setting
+                  : currentIndex == 2
+                      ? AppIcons.setting
+                      : AppIcons.storm,
               height: 25,
               color: CupertinoColors.activeBlue,
             ),
           ),
         ],
-        title: _appBarItems('Home'),
+        title: _appBarItems,
         elevation: 0,
       );
-  Widget _appBarItems(String icon) => Wrap(
+  Widget get _appBarItems => Wrap(
         spacing: 100,
         crossAxisAlignment: WrapCrossAlignment.start,
         children: [
           currentIndex == 1
               ? _searchField
-              : SvgPicture.string(
-                  AppIcons.twitterLogo,
-                  height: 30,
-                ),
+              : currentIndex == 2
+                  ? _notificationAppBar
+                  : _homeAppBar
         ],
       );
 
@@ -129,7 +135,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       );
 
   Widget get _tabBar => TabBar(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         onTap: ((index) {
           setState(() {
             currentIndex = index;
@@ -143,7 +149,10 @@ class _TwTabbarViewState extends State<TwTabbarView> {
           Tab(icon: _svgIcon(AppIcons.message)),
         ],
       );
-
+  Widget get _homeAppBar => SvgPicture.string(
+        AppIcons.twitterLogo,
+        height: 30,
+      );
   Widget get _searchField => SizedBox(
         height: 35,
         child: TextField(
@@ -163,6 +172,11 @@ class _TwTabbarViewState extends State<TwTabbarView> {
             ),
           ),
         ),
+      );
+
+  Widget get _notificationAppBar => Text(
+        'Bildirimler',
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 26),
       );
 
   Widget _svgIcon(String icon) => SvgPicture.string(

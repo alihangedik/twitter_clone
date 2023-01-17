@@ -71,9 +71,12 @@ class _HomeState extends State<Home> {
   Widget get _placeholder => SizedBox(
         height: 300,
         width: 300,
-        child: Image.network(
-          randomImage,
-          fit: BoxFit.cover,
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          child: Image.network(
+            randomImage,
+            fit: BoxFit.cover,
+          ),
         ),
       );
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/home/tabbar_view.dart';
-import 'home/home.dart';
+import 'package:twitter_clone/pages/tabbar_view.dart';
+import 'pages/home.dart';
 
 void main() => runApp(const MyApp());
 
