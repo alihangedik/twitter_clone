@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:twitter_clone/pages/message.dart';
 import 'package:twitter_clone/pages/search.dart';
 import 'package:twitter_clone/icons.dart';
 
@@ -56,6 +57,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       initialIndex: initialIndex,
       length: 4,
       child: Scaffold(
+        drawer: Drawer(),
         bottomNavigationBar: _bottomAppBar,
         body: SafeArea(
           child: Column(
@@ -67,7 +69,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
                     Home(_scrollController),
                     Search(_scrollController),
                     Notifications(_scrollController),
-                    const Text('data'),
+                    const Message()
                   ],
                 ),
               ),
@@ -107,7 +109,9 @@ class _TwTabbarViewState extends State<TwTabbarView> {
                   ? AppIcons.setting
                   : currentIndex == 2
                       ? AppIcons.setting
-                      : AppIcons.storm,
+                      : currentIndex == 3
+                          ? AppIcons.setting
+                          : AppIcons.storm,
               height: 25,
               color: CupertinoColors.activeBlue,
             ),
@@ -121,10 +125,12 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         crossAxisAlignment: WrapCrossAlignment.start,
         children: [
           currentIndex == 1
-              ? _searchField
+              ? _searchField('Twitter\'da Ara')
               : currentIndex == 2
                   ? _notificationAppBar
-                  : _homeAppBar
+                  : currentIndex == 3
+                      ? _searchField('Direkt Mesajlarda Ara')
+                      : _homeAppBar
         ],
       );
 
@@ -153,20 +159,16 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         AppIcons.twitterLogo,
         height: 30,
       );
-  Widget get _searchField => SizedBox(
+  Widget _searchField(String title) => SizedBox(
         height: 35,
         child: TextField(
           maxLines: 1,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(0),
-            hintText: 'Twitter\'da Ara',
+            contentPadding: const EdgeInsets.only(left: 15),
+            hintText: title,
             fillColor: Colors.grey,
             focusColor: Colors.grey,
             hoverColor: Colors.grey,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: SvgPicture.string(AppIcons.search, color: Colors.grey),
-            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
             ),

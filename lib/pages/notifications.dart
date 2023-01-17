@@ -20,6 +20,7 @@ class _NotificationsState extends State<Notifications> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        floatingActionButton: _fabButton,
         appBar: AppBar(
           elevation: 0,
           toolbarHeight: 0,
@@ -35,6 +36,11 @@ class _NotificationsState extends State<Notifications> {
       ),
     );
   }
+
+  Widget get _fabButton => FloatingActionButton(
+        onPressed: (() {}),
+        child: const Icon(Icons.add_rounded),
+      );
 
   PreferredSizeWidget get _tabBar => const TabBar(tabs: [
         Tab(child: Text('Tümü')),

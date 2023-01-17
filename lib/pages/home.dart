@@ -19,7 +19,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(floatingActionButton: _fabButton, body: _listview);
+    return Scaffold(
+      floatingActionButton: _fabButton,
+      body: _listview,
+    );
   }
 
   Widget get _fabButton => FloatingActionButton(
