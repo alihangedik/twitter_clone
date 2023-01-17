@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:twitter_clone/home/search.dart';
 import 'package:twitter_clone/icons.dart';
 
 import 'home.dart';
@@ -18,6 +19,8 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   bool isHeaderClose = false;
   double lastOffset = 0;
   late ScrollController _scrollController;
+  int initialIndex = 0;
+  int currentIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -49,6 +52,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: initialIndex,
       length: 4,
       child: Scaffold(
         bottomNavigationBar: _bottomAppBar,
@@ -60,7 +64,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
                 child: TabBarView(
                   children: [
                     Home(_scrollController),
-                    const Text('data'),
+                    Search(_scrollController),
                     const Text('data'),
                     const Text('data'),
                   ],
@@ -85,25 +89,36 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   //     );
 
   Widget get _appBar => AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(avatarUrl),
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SvgPicture.string(
+              currentIndex == 1 ? AppIcons.setting : AppIcons.storm,
+              height: 25,
+              color: CupertinoColors.activeBlue,
+            ),
+          ),
+        ],
         title: _appBarItems('Home'),
         elevation: 0,
       );
   Widget _appBarItems(String icon) => Wrap(
-        spacing: 130,
-        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 100,
+        crossAxisAlignment: WrapCrossAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(avatarUrl),
-          ),
-          SvgPicture.string(
-            AppIcons.twitterLogo,
-            height: 30,
-          ),
-          SvgPicture.string(
-            AppIcons.storm,
-            color: CupertinoColors.activeBlue,
-            height: 20,
-          )
+          currentIndex == 1
+              ? _searchField
+              : SvgPicture.string(
+                  AppIcons.twitterLogo,
+                  height: 30,
+                ),
         ],
       );
 
@@ -114,6 +129,12 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       );
 
   Widget get _tabBar => TabBar(
+        physics: NeverScrollableScrollPhysics(),
+        onTap: ((index) {
+          setState(() {
+            currentIndex = index;
+          });
+        }),
         unselectedLabelColor: CupertinoColors.inactiveGray,
         tabs: [
           Tab(icon: _svgIcon(AppIcons.home)),
@@ -121,6 +142,27 @@ class _TwTabbarViewState extends State<TwTabbarView> {
           Tab(icon: _svgIcon(AppIcons.notifications)),
           Tab(icon: _svgIcon(AppIcons.message)),
         ],
+      );
+
+  Widget get _searchField => SizedBox(
+        height: 35,
+        child: TextField(
+          maxLines: 1,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(0),
+            hintText: 'Twitter\'da Ara',
+            fillColor: Colors.grey,
+            focusColor: Colors.grey,
+            hoverColor: Colors.grey,
+            prefixIcon: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: SvgPicture.string(AppIcons.search, color: Colors.grey),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
       );
 
   Widget _svgIcon(String icon) => SvgPicture.string(

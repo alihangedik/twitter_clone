@@ -15,6 +15,7 @@ class _HomeState extends State<Home> {
   String randomImage = "https://picsum.photos/200/300";
   String cardTitle =
       'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500 lerden beri endüstri standardı sahte metinler olarak kullanılmıştır.\n#lorem #ipsum';
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,13 @@ class _HomeState extends State<Home> {
           title: Wrap(
             runSpacing: 10,
             children: [
-              _listCardTitle('Hello'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _listCardTitle('Alihan Gedik'),
+                  _listCardHandle('alihangedik'),
+                ],
+              ),
               Text(cardTitle),
               _placeholder,
               _cardIconRow,
@@ -57,7 +64,10 @@ class _HomeState extends State<Home> {
         title,
         style: titleTextStyle,
       );
-
+  Widget _listCardHandle(String title) => Text(
+        '@$title',
+        style: Theme.of(context).textTheme.bodySmall,
+      );
   Widget get _placeholder => SizedBox(
         height: 300,
         width: 300,
