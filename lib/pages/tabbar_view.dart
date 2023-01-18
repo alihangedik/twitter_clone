@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/pages/message.dart';
 import 'package:twitter_clone/pages/search.dart';
 import 'package:twitter_clone/icons.dart';
+import 'package:twitter_clone/theme/colors.dart';
 
 import 'home.dart';
 import 'notifications.dart';
@@ -57,12 +58,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       initialIndex: initialIndex,
       length: 4,
       child: Scaffold(
-        drawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [_navbarHeaderCard, _divider, _navbarItemList, _divider],
-          ),
-        ),
+        drawer: _drawer,
         bottomNavigationBar: _bottomAppBar,
         body: SafeArea(
           child: Column(
@@ -109,17 +105,13 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SvgPicture.string(
-              currentIndex == 1
-                  ? AppIcons.setting
-                  : currentIndex == 2
-                      ? AppIcons.setting
-                      : currentIndex == 3
-                          ? AppIcons.setting
-                          : AppIcons.storm,
-              height: 25,
-              color: CupertinoColors.activeBlue,
-            ),
+            child: currentIndex == 0
+                ? const SizedBox()
+                : SvgPicture.string(
+                    AppIcons.setting,
+                    height: 25,
+                    color: CupertinoColors.activeBlue,
+                  ),
           ),
         ],
         title: _appBarItems,
@@ -146,6 +138,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       );
 
   Widget get _tabBar => TabBar(
+        indicatorColor: Colors.transparent,
         physics: const NeverScrollableScrollPhysics(),
         onTap: ((index) {
           setState(() {
@@ -154,15 +147,24 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         }),
         unselectedLabelColor: CupertinoColors.inactiveGray,
         tabs: [
-          Tab(icon: _svgIcon(AppIcons.home)),
-          Tab(icon: _svgIcon(AppIcons.search)),
-          Tab(icon: _svgIcon(AppIcons.notifications)),
-          Tab(icon: _svgIcon(AppIcons.message)),
+          Tab(
+              icon: _svgIcon(
+                  currentIndex == 0 ? AppIcons.homeBold : AppIcons.home)),
+          Tab(
+              icon: _svgIcon(
+                  currentIndex == 1 ? AppIcons.searchBold : AppIcons.search)),
+          Tab(
+              icon: _svgIcon(currentIndex == 2
+                  ? AppIcons.notificationsBold
+                  : AppIcons.notifications)),
+          Tab(
+              icon: _svgIcon(
+                  currentIndex == 3 ? AppIcons.messageBold : AppIcons.message)),
         ],
       );
   Widget get _homeAppBar => SvgPicture.string(
         AppIcons.twitterLogo,
-        height: 30,
+        height: 25,
       );
   Widget _searchField(String title) => SizedBox(
         height: 35,
@@ -188,11 +190,11 @@ class _TwTabbarViewState extends State<TwTabbarView> {
 
   Widget _svgIcon(String icon) => SvgPicture.string(
         icon,
-        color: CupertinoColors.activeBlue,
-        height: 20,
+        color: AppColors.twitterBlue,
+        height: 24,
       );
   Widget get _navBarHeaderListTile => ListTile(
-        trailing: const Icon(Icons.more_horiz_outlined),
+        trailing: const Icon(Icons.add_circle_outline),
         title: SizedBox(
           height: 110,
           child: Column(
@@ -235,14 +237,14 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         color: Theme.of(context).scaffoldBackgroundColor,
         child: _navBarHeaderListTile,
       );
-  Widget _navbarItems(String title) => Column(
+  Widget _navbarItems(String title, String icon) => Column(
         children: [
           ListTile(
-            leading: const Icon(
-              Icons.list_alt_rounded,
-              size: 30,
+            leading: SvgPicture.string(icon),
+            title: Text(
+              title,
+              style: Theme.of(context).textTheme.headline6,
             ),
-            title: Text(title),
           )
         ],
       );
@@ -250,15 +252,22 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   Widget get _navbarItemList => ListView(
         shrinkWrap: true,
         children: [
-          _navbarItems('Profil'),
-          _navbarItems('Konular'),
-          _navbarItems('Yer İşaretleri'),
-          _navbarItems('Listeler'),
-          _navbarItems('Twitter Çevresi'),
+          _navbarItems('Profil', AppIcons.profile),
+          _navbarItems('Konular', AppIcons.subjects),
+          _navbarItems('Yer İşaretleri', AppIcons.placeMarks),
+          _navbarItems('Listeler', AppIcons.lists),
+          _navbarItems('Twitter Çevresi', AppIcons.twitterCircle),
         ],
       );
 
-  Widget get _divider => Divider(
+  Widget get _drawer => Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [_navbarHeaderCard, _divider, _navbarItemList, _divider],
+        ),
+      );
+
+  Widget get _divider => const Divider(
         endIndent: 40,
         indent: 20,
       );

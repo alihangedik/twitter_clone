@@ -27,7 +27,10 @@ class _HomeState extends State<Home> {
 
   Widget get _fabButton => FloatingActionButton(
         onPressed: (() {}),
-        child: SvgPicture.string(AppIcons.fabTweet),
+        child: SvgPicture.string(
+          AppIcons.fabTweet,
+          color: Colors.white,
+        ),
       );
 
   Widget get _listview => ListView.builder(
@@ -84,7 +87,8 @@ class _HomeState extends State<Home> {
       );
 
   Widget get _cardIconRow => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _iconLabelButton('1424', AppIcons.views),
           _iconLabelButton('2', AppIcons.comments),
@@ -100,10 +104,14 @@ class _HomeState extends State<Home> {
           SvgPicture.string(
             icon,
             color: CupertinoColors.inactiveGray,
+            height: 18,
           ),
           Text(
             text,
-            style: Theme.of(context).textTheme.subtitle2,
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(fontSize: 16, fontWeight: FontWeight.normal),
           ),
         ],
       );
