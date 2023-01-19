@@ -82,8 +82,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   }
 
   Widget get _bottomAppBar => BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 6,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: _tabBar,
       );
 
@@ -93,8 +92,9 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   //     );
 
   Widget get _appBar => AppBar(
-        shape:
-            const Border(bottom: BorderSide(color: Colors.black12, width: 0.5)),
+        // shape: Border(
+        //     bottom: BorderSide(
+        //         color: AppColors.white.withOpacity(0.4), width: 0.5)),
         leading: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: CircleAvatar(
@@ -107,11 +107,8 @@ class _TwTabbarViewState extends State<TwTabbarView> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: currentIndex == 0
                 ? const SizedBox()
-                : SvgPicture.string(
-                    AppIcons.setting,
-                    height: 25,
-                    color: CupertinoColors.activeBlue,
-                  ),
+                : SvgPicture.string(AppIcons.setting,
+                    height: 20, color: AppColors.white),
           ),
         ],
         title: _appBarItems,
@@ -167,16 +164,27 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         height: 25,
       );
   Widget _searchField(String title) => SizedBox(
-        height: 35,
+        height: 30,
         child: TextField(
           maxLines: 1,
           decoration: InputDecoration(
+            filled: true,
             contentPadding: const EdgeInsets.only(left: 15),
             hintText: title,
-            fillColor: Colors.grey,
+            hintStyle: Theme.of(context).textTheme.bodySmall,
+            prefixIcon: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: SvgPicture.string(
+                AppIcons.search,
+                color: AppColors.grey,
+              ),
+            ),
+            fillColor: AppColors.darkGrey,
             focusColor: Colors.grey,
             hoverColor: Colors.grey,
             border: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: Colors.transparent, width: 0, style: BorderStyle.none),
               borderRadius: BorderRadius.circular(30),
             ),
           ),
@@ -190,7 +198,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
 
   Widget _svgIcon(String icon) => SvgPicture.string(
         icon,
-        color: AppColors.twitterBlue,
+        color: AppColors.white,
         height: 24,
       );
   Widget get _navBarHeaderListTile => ListTile(

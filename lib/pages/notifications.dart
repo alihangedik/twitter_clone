@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/icons.dart';
 
+import '../theme/colors.dart';
+
 class Notifications extends StatefulWidget {
   const Notifications(this.controller, {super.key});
   final ScrollController controller;
@@ -39,14 +41,21 @@ class _NotificationsState extends State<Notifications> {
 
   Widget get _fabButton => FloatingActionButton(
         onPressed: (() {}),
-        child: const Icon(Icons.add_rounded),
+        child: SvgPicture.string(
+          AppIcons.fabTweet,
+          color: Colors.white,
+        ),
       );
 
-  PreferredSizeWidget get _tabBar => const TabBar(tabs: [
-        Tab(child: Text('Tümü')),
-        Tab(child: Text('Onaylanmış')),
-        Tab(child: Text('Diğer')),
-      ]);
+  PreferredSizeWidget get _tabBar => const TabBar(
+          indicatorWeight: 4,
+          indicatorColor: AppColors.twitterBlue,
+          indicatorSize: TabBarIndicatorSize.label,
+          tabs: [
+            Tab(child: Text('Tümü')),
+            Tab(child: Text('Onaylanmış')),
+            Tab(child: Text('Bahsedenler')),
+          ]);
   Widget get _listviewSeparated => RefreshIndicator(
         onRefresh: () {
           return Future.delayed(Duration(milliseconds: 500));

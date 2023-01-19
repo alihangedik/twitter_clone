@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/model/trends_model.dart';
+import 'package:twitter_clone/pages/notifications.dart';
 
 import '../icons.dart';
 
@@ -13,6 +14,8 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   late final TrendsModel _trendsModel;
+  final String _imageText = 'Tenis Turnuvası ・ CANLI';
+  final String _bigImageText = 'Australian Open 2023';
   @override
   void initState() {
     super.initState();
@@ -34,6 +37,7 @@ class _SearchState extends State<Search> {
           physics: const AlwaysScrollableScrollPhysics(),
           controller: widget.scrollController,
           children: [
+            _headerImage,
             _headerText,
             listviewSeparated(),
           ],
@@ -42,17 +46,47 @@ class _SearchState extends State<Search> {
     );
   }
 
+  Widget get _headerImage => Stack(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: Image.network(
+              randomImage,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            top: 130,
+            left: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _imageText,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  _bigImageText,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontSize: 30, fontWeight: FontWeight.w900),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+
   ListView listviewSeparated() {
-    return ListView.separated(
+    return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: 10,
-      separatorBuilder: (BuildContext context, int index) {
-        return const Divider();
-      },
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
           child: listCard(context),
         );
       },
@@ -102,7 +136,7 @@ class _SearchState extends State<Search> {
           ),
         ),
         const Icon(
-          Icons.more_vert_rounded,
+          Icons.more_horiz_rounded,
           color: Colors.grey,
         )
       ],
@@ -111,14 +145,20 @@ class _SearchState extends State<Search> {
 
   Widget get _fabButton => FloatingActionButton(
         onPressed: (() {}),
-        child: const Icon(Icons.add_rounded),
+        child: SvgPicture.string(
+          AppIcons.fabTweet,
+          color: Colors.white,
+        ),
       );
 
   Widget get _headerText => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
         child: Text(
-          'Türkiye gündemleri',
-          style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 18),
+          'Senin için trendler',
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              ?.copyWith(fontSize: 20, fontWeight: FontWeight.w900),
         ),
       );
 }

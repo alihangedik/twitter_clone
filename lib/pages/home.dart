@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/icons.dart';
+import 'package:twitter_clone/products/spaces.dart';
+import 'package:twitter_clone/theme/colors.dart';
 
 class Home extends StatefulWidget {
   const Home(this.controller, {super.key});
@@ -10,21 +12,42 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SpacesMixin {
   String randomImageAvatar = "https://loremflickr.com/320/240";
   String randomImage = "https://picsum.photos/200/300";
   String cardTitle =
-      'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500 lerden beri endüstri standardı sahte metinler olarak kullanılmıştır.\n#lorem #ipsum';
+      'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir.';
   int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: _fabButton,
-      body: _listview,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: _tabBar,
+          toolbarHeight: 0,
+        ),
+        floatingActionButton: _fabButton,
+        body: TabBarView(children: [_listview, _listview]),
+      ),
     );
   }
 
+  PreferredSizeWidget get _tabBar => const TabBar(
+          indicatorWeight: 4,
+          indicatorColor: AppColors.twitterBlue,
+          indicatorSize: TabBarIndicatorSize.label,
+          tabs: [
+            Tab(
+                child: Text(
+              'Senin İçin',
+            )),
+            Tab(
+                child: Text(
+              'Takip Edilen',
+            )),
+          ]);
   Widget get _fabButton => FloatingActionButton(
         onPressed: (() {}),
         child: SvgPicture.string(
@@ -33,7 +56,8 @@ class _HomeState extends State<Home> {
         ),
       );
 
-  Widget get _listview => ListView.builder(
+  Widget get _listview => ListView.separated(
+        separatorBuilder: (context, index) => const Divider(),
         itemCount: 10,
         controller: widget.controller,
         itemBuilder: (BuildContext context, int index) {
@@ -46,23 +70,38 @@ class _HomeState extends State<Home> {
         child: ListTile(
           tileColor: Theme.of(context).scaffoldBackgroundColor,
           leading: CircleAvatar(
+            radius: 25,
             backgroundImage: NetworkImage(randomImageAvatar),
           ),
-          title: Wrap(
-            runSpacing: 10,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: SizedBox(
+              height: 400,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _listCardTitle('Alihan Gedik'),
-                  _listCardHandle('alihangedik'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _listCardTitle('Alihan Gedik'),
+                      lowWidth,
+                      _listCardHandle('alihangedik'),
+                      _listCardTime(' ・ 16h'),
+                      midWidth,
+                      const Icon(
+                        Icons.more_horiz,
+                        size: 17,
+                      )
+                    ],
+                  ),
+                  Text(cardTitle),
+                  lowHeight,
+                  _placeholder,
+                  lowHeight,
+                  _cardIconRow,
                 ],
               ),
-              Text(cardTitle),
-              _placeholder,
-              _cardIconRow,
-              const Divider()
-            ],
+            ),
           ),
         ),
       );
@@ -72,6 +111,13 @@ class _HomeState extends State<Home> {
       );
   Widget _listCardHandle(String title) => Text(
         '@$title',
+        style: Theme.of(context)
+            .textTheme
+            .bodySmall
+            ?.copyWith(color: AppColors.white),
+      );
+  Widget _listCardTime(String title) => Text(
+        title,
         style: Theme.of(context).textTheme.bodySmall,
       );
   Widget get _placeholder => SizedBox(
@@ -87,10 +133,9 @@ class _HomeState extends State<Home> {
       );
 
   Widget get _cardIconRow => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _iconLabelButton('1424', AppIcons.views),
           _iconLabelButton('2', AppIcons.comments),
           _iconLabelButton('34', AppIcons.retweet),
           _iconLabelButton('433', AppIcons.like),
@@ -99,6 +144,7 @@ class _HomeState extends State<Home> {
       );
 
   Widget _iconLabel(String text, String icon) => Wrap(
+        runAlignment: WrapAlignment.center,
         spacing: 8,
         children: [
           SvgPicture.string(
@@ -108,10 +154,10 @@ class _HomeState extends State<Home> {
           ),
           Text(
             text,
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall
-                ?.copyWith(fontSize: 16, fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: AppColors.grey),
           ),
         ],
       );
@@ -120,6 +166,7 @@ class _HomeState extends State<Home> {
         child: _iconLabel(text, icon),
         onTap: () {},
       );
+
   final TextStyle titleTextStyle =
-      const TextStyle(fontWeight: FontWeight.w800, color: Colors.black);
+      const TextStyle(fontWeight: FontWeight.w800, color: AppColors.white);
 }
