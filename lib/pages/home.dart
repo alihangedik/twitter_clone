@@ -7,6 +7,8 @@ import 'package:twitter_clone/products/home_tabbar.dart';
 import 'package:twitter_clone/products/spaces.dart';
 import 'package:twitter_clone/theme/colors.dart';
 
+import '../products/full_screen_image.dart';
+
 class Home extends StatefulWidget {
   const Home(this.controller, {super.key});
   final ScrollController controller;
@@ -77,7 +79,7 @@ class _HomeState extends State<Home> with SpacesMixin {
                   lowHeight,
                   _placeholder,
                   lowHeight,
-                  _cardIconRow,
+                  cardIconRow,
                 ],
               ),
             ),
@@ -104,25 +106,33 @@ class _HomeState extends State<Home> with SpacesMixin {
         width: 300,
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
-          child: Image.network(
-            randomImage,
-            fit: BoxFit.cover,
+          child: GestureDetector(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FullScreenImage(
+                          image: randomImage,
+                        ))),
+            child: Image.network(
+              randomImage,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       );
 
-  Widget get _cardIconRow => Row(
+  Widget get cardIconRow => Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _iconLabelButton('2', AppIcons.comments),
-          _iconLabelButton('34', AppIcons.retweet),
-          _iconLabelButton('433', AppIcons.like),
-          _iconLabelButton('', AppIcons.share),
+          iconLabelButton('2', AppIcons.comments),
+          iconLabelButton('34', AppIcons.retweet),
+          iconLabelButton('433', AppIcons.like),
+          iconLabelButton('', AppIcons.share),
         ],
       );
 
-  Widget _iconLabel(String text, String icon) => Wrap(
+  Widget iconLabel(String text, String icon) => Wrap(
         runAlignment: WrapAlignment.center,
         spacing: 8,
         children: [
@@ -141,8 +151,8 @@ class _HomeState extends State<Home> with SpacesMixin {
         ],
       );
 
-  Widget _iconLabelButton(String text, String icon) => InkWell(
-        child: _iconLabel(text, icon),
+  Widget iconLabelButton(String text, String icon) => InkWell(
+        child: iconLabel(text, icon),
         onTap: () {},
       );
 
