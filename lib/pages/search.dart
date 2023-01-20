@@ -32,7 +32,6 @@ class _SearchState extends State<Search> {
         return Future.delayed(const Duration(milliseconds: 500));
       },
       child: Scaffold(
-        floatingActionButton: _fabButton,
         body: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
           controller: widget.scrollController,
@@ -142,14 +141,6 @@ class _SearchState extends State<Search> {
       ],
     );
   }
-
-  Widget get _fabButton => FloatingActionButton(
-        onPressed: (() {}),
-        child: SvgPicture.string(
-          AppIcons.fabTweet,
-          color: Colors.white,
-        ),
-      );
 
   Widget get _headerText => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),

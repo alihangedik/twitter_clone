@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../icons.dart';
 
 class Message extends StatefulWidget {
   const Message(this.controller, {super.key});
@@ -14,22 +11,14 @@ class _MessageState extends State<Message> {
   String randomImageAvatar = "https://loremflickr.com/320/240";
   String twitterHandle = 'alperenozkan';
   String twitterName = 'Alperen Özkan';
-  String dummyMessage = 'Selam! N\'apıyosun';
+  String dummyMessage = 'Selam nasılsın 😃';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: messageList,
-      floatingActionButton: _fabButton,
     );
   }
 
-  Widget get _fabButton => FloatingActionButton(
-        onPressed: (() {}),
-        child: SvgPicture.string(
-          AppIcons.messageAdd,
-          height: 20,
-        ),
-      );
   Widget get messageList => RefreshIndicator(
         onRefresh: () {
           return Future.delayed(const Duration(milliseconds: 500));

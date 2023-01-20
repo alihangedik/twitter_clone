@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/icons.dart';
+import 'package:twitter_clone/products/home_tabbar.dart';
 import 'package:twitter_clone/products/spaces.dart';
 import 'package:twitter_clone/theme/colors.dart';
 
@@ -18,13 +20,6 @@ class _HomeState extends State<Home> with SpacesMixin {
   String cardTitle =
       'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir.';
   int currentIndex = 0;
-  bool isTap = false;
-
-  fabOnpressed() {
-    setState(() {
-      isTap = !isTap;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,38 +27,13 @@ class _HomeState extends State<Home> with SpacesMixin {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          bottom: _tabBar,
+          bottom: tabBar,
           toolbarHeight: 0,
         ),
-        floatingActionButton: fabButton(
-            isTap == false ? AppIcons.tweetAdd : AppIcons.fabTweet,
-            fabOnpressed),
         body: TabBarView(children: [_listview, _listview]),
       ),
     );
   }
-
-  PreferredSizeWidget get _tabBar => const TabBar(
-          indicatorWeight: 4,
-          indicatorColor: AppColors.twitterBlue,
-          indicatorSize: TabBarIndicatorSize.label,
-          tabs: [
-            Tab(
-                child: Text(
-              'Senin İçin',
-            )),
-            Tab(
-                child: Text(
-              'Takip Edilen',
-            )),
-          ]);
-  Widget fabButton(String icon, var onPressed) => FloatingActionButton(
-        onPressed: onPressed,
-        child: SvgPicture.string(
-          icon,
-          color: Colors.white,
-        ),
-      );
 
   Widget get _listview => ListView.separated(
         separatorBuilder: (context, index) => const Divider(),
