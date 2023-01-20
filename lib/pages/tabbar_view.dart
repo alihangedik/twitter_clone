@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/pages/message.dart';
 import 'package:twitter_clone/pages/search.dart';
@@ -17,6 +18,33 @@ class TwTabbarView extends StatefulWidget {
 }
 
 class _TwTabbarViewState extends State<TwTabbarView> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  _showSheet() => showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+        anchorPoint: Offset.fromDirection(2),
+        builder: (context) {
+          return Expanded(
+            child: SizedBox(
+              height: 300,
+              child: Column(
+                children: [
+                  _sheetTopContainer,
+                  _sheetIcon,
+                  _sheetText('Zaman akışın Anasayfa olarak ayarlandı'),
+                  _sheetListTile('En son Tweetlere geç', AppIcons.swap,
+                      'Gönderilen en son Tweetler görünür.', true),
+                  _sheetListTile('', AppIcons.setting,
+                      'İçerik tercihlerini görüntüle', false)
+                ],
+              ),
+            ),
+          );
+        },
+        context: context,
+      );
   String avatarUrl =
       'https://avatars.githubusercontent.com/u/71148065?s=400&u=cd2b1a170fa19d2b44518a53d745ef860427ce25&v=4';
   bool isHeaderClose = false;
@@ -58,6 +86,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       initialIndex: initialIndex,
       length: 4,
       child: Scaffold(
+        key: _scaffoldKey,
         drawer: _drawer,
         bottomNavigationBar: _bottomAppBar,
         body: SafeArea(
@@ -70,7 +99,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
                     Home(_scrollController),
                     Search(_scrollController),
                     Notifications(_scrollController),
-                    const Message()
+                    Message(_scrollController)
                   ],
                 ),
               ),
@@ -97,8 +126,15 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         //         color: AppColors.white.withOpacity(0.4), width: 0.5)),
         leading: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(avatarUrl),
+          child: InkWell(
+            onTap: (() {
+              setState(() {
+                _scaffoldKey.currentState?.openDrawer();
+              });
+            }),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(avatarUrl),
+            ),
           ),
         ),
         centerTitle: currentIndex == 2 ? false : true,
@@ -106,7 +142,13 @@ class _TwTabbarViewState extends State<TwTabbarView> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: currentIndex == 0
-                ? const SizedBox()
+                ? IconButton(
+                    onPressed: (() {
+                      _showSheet();
+                    }),
+                    icon: SvgPicture.string(AppIcons.feature,
+                        height: 20, color: AppColors.white),
+                  )
                 : SvgPicture.string(AppIcons.setting,
                     height: 20, color: AppColors.white),
           ),
@@ -179,14 +221,6 @@ class _TwTabbarViewState extends State<TwTabbarView> {
                 color: AppColors.grey,
               ),
             ),
-            fillColor: AppColors.darkGrey,
-            focusColor: Colors.grey,
-            hoverColor: Colors.grey,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Colors.transparent, width: 0, style: BorderStyle.none),
-              borderRadius: BorderRadius.circular(30),
-            ),
           ),
         ),
       );
@@ -248,7 +282,10 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   Widget _navbarItems(String title, String icon) => Column(
         children: [
           ListTile(
-            leading: SvgPicture.string(icon),
+            leading: SvgPicture.string(
+              icon,
+              color: AppColors.white,
+            ),
             title: Text(
               title,
               style: Theme.of(context).textTheme.headline6,
@@ -258,6 +295,8 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       );
 
   Widget get _navbarItemList => ListView(
+        padding: EdgeInsets.zero,
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
           _navbarItems('Profil', AppIcons.profile),
@@ -269,15 +308,109 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       );
 
   Widget get _drawer => Drawer(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [_navbarHeaderCard, _divider, _navbarItemList, _divider],
+          children: [
+            _navbarHeaderCard,
+            _divider,
+            ListView(
+              shrinkWrap: true,
+              children: [
+                _navbarItemList,
+                _divider,
+                Column(
+                  children: [
+                    _expansionTile('Profesyoneller Araçlar'),
+                    _expansionTile('Ayarlar ve Gizlilik'),
+                  ],
+                )
+              ],
+            )
+          ],
         ),
       );
 
   Widget get _divider => const Divider(
+        height: 5,
         endIndent: 40,
         indent: 20,
+        color: AppColors.grey,
+      );
+
+  Widget get _sheetTopContainer => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Container(
+          height: 6,
+          width: 40,
+          decoration: BoxDecoration(
+              color: AppColors.grey, borderRadius: BorderRadius.circular(30)),
+        ),
+      );
+  Widget _sheetText(String sheetText) => Padding(
+        padding: const EdgeInsets.all(14),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            sheetText,
+            style:
+                Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
+          ),
+        ),
+      );
+  Widget get _sheetIcon => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: SvgPicture.string(
+          AppIcons.feature,
+          color: AppColors.white,
+          height: 40,
+        ),
+      );
+
+  Widget _sheetListTile(
+          String title, String icon, String subtitle, bool isHaveSubtitle) =>
+      Column(
+        children: [
+          ListTile(
+            minLeadingWidth: 10,
+            subtitle: isHaveSubtitle == false
+                ? null
+                : Text(
+                    title,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+            leading: SvgPicture.string(
+              icon,
+              height: 25,
+              color: AppColors.white,
+            ),
+            title: Text(subtitle),
+          )
+        ],
+      );
+
+  Widget _drawerListtile(String title, String icon) => ListTile(
+        leading: SvgPicture.string(
+          icon,
+          color: AppColors.white,
+          height: 22,
+        ),
+        title: Text(title),
+      );
+
+  Widget _expansionTile(String title) => Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          title: Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          children: [
+            _drawerListtile('Profesyoneller İçin Twitter', AppIcons.rocket),
+            _drawerListtile('Gelire Dönüştürme', AppIcons.cash)
+          ],
+        ),
       );
   final TextStyle titleTextStyle =
       const TextStyle(fontWeight: FontWeight.w800, color: Colors.black);

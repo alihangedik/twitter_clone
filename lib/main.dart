@@ -15,6 +15,15 @@ class MyApp extends StatelessWidget {
       title: 'Twitter',
       home: const TwTabbarView(),
       theme: ThemeData.dark().copyWith(
+        inputDecorationTheme: InputDecorationTheme(
+          fillColor: AppColors.darkGrey,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: const BorderSide(color: AppColors.grey, width: 0.5)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: const BorderSide(color: AppColors.darkGrey)),
+        ),
         dividerColor: AppColors.white.withOpacity(0.4),
         scaffoldBackgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -23,8 +32,9 @@ class MyApp extends StatelessWidget {
         tabBarTheme: const TabBarTheme(
           labelColor: AppColors.white,
         ),
-        appBarTheme:
-            AppBarTheme(backgroundColor: AppColors.black.withOpacity(0.8)),
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppColors.black.withOpacity(0.8),
+        ),
       ),
     );
   }

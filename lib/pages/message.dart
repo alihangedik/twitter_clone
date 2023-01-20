@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import '../icons.dart';
 
 class Message extends StatefulWidget {
-  const Message({super.key});
-
+  const Message(this.controller, {super.key});
+  final ScrollController controller;
   @override
   State<Message> createState() => _MessageState();
 }
@@ -35,6 +35,7 @@ class _MessageState extends State<Message> {
           return Future.delayed(const Duration(milliseconds: 500));
         },
         child: ListView.builder(
+          controller: widget.controller,
           itemCount: 15,
           itemBuilder: (BuildContext context, int index) {
             return _messageCard;

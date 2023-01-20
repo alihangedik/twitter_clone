@@ -18,6 +18,13 @@ class _HomeState extends State<Home> with SpacesMixin {
   String cardTitle =
       'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir.';
   int currentIndex = 0;
+  bool isTap = false;
+
+  fabOnpressed() {
+    setState(() {
+      isTap = !isTap;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,9 @@ class _HomeState extends State<Home> with SpacesMixin {
           bottom: _tabBar,
           toolbarHeight: 0,
         ),
-        floatingActionButton: _fabButton,
+        floatingActionButton: fabButton(
+            isTap == false ? AppIcons.tweetAdd : AppIcons.fabTweet,
+            fabOnpressed),
         body: TabBarView(children: [_listview, _listview]),
       ),
     );
@@ -48,10 +57,10 @@ class _HomeState extends State<Home> with SpacesMixin {
               'Takip Edilen',
             )),
           ]);
-  Widget get _fabButton => FloatingActionButton(
-        onPressed: (() {}),
+  Widget fabButton(String icon, var onPressed) => FloatingActionButton(
+        onPressed: onPressed,
         child: SvgPicture.string(
-          AppIcons.fabTweet,
+          icon,
           color: Colors.white,
         ),
       );
