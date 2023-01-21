@@ -22,6 +22,7 @@ class _HomeState extends State<Home> with SpacesMixin {
   String cardTitle =
       'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir.';
   int currentIndex = 0;
+  bool isTap = false;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +96,7 @@ class _HomeState extends State<Home> with SpacesMixin {
         style: Theme.of(context)
             .textTheme
             .bodySmall
-            ?.copyWith(color: AppColors.white),
+            ?.copyWith(color: AppColors.grey),
       );
   Widget _listCardTime(String title) => Text(
         title,
@@ -125,10 +126,10 @@ class _HomeState extends State<Home> with SpacesMixin {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          iconLabelButton('2', AppIcons.comments),
-          iconLabelButton('34', AppIcons.retweet),
-          iconLabelButton('433', AppIcons.like),
-          iconLabelButton('', AppIcons.share),
+          iconLabel('2', AppIcons.comments),
+          iconLabel('34', AppIcons.retweet),
+          iconLabel('433', AppIcons.like),
+          iconLabel('', AppIcons.share),
         ],
       );
 
@@ -136,10 +137,17 @@ class _HomeState extends State<Home> with SpacesMixin {
         runAlignment: WrapAlignment.center,
         spacing: 8,
         children: [
-          SvgPicture.string(
-            icon,
-            color: CupertinoColors.inactiveGray,
-            height: 18,
+          InkWell(
+            onTap: (() {
+              setState(() {
+                isTap = !isTap;
+              });
+            }),
+            child: SvgPicture.string(
+              icon,
+              color: CupertinoColors.inactiveGray,
+              height: 18,
+            ),
           ),
           Text(
             text,
@@ -149,11 +157,6 @@ class _HomeState extends State<Home> with SpacesMixin {
                 color: AppColors.grey),
           ),
         ],
-      );
-
-  Widget iconLabelButton(String text, String icon) => InkWell(
-        child: iconLabel(text, icon),
-        onTap: () {},
       );
 
   final TextStyle titleTextStyle =

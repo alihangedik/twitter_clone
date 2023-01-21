@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 ThemeData themeDark = ThemeData.dark().copyWith(
-  buttonTheme: ButtonThemeData(
+  buttonTheme: const ButtonThemeData(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       hoverColor: Colors.transparent),
-  splashColor: Colors.purple,
-  highlightColor: Colors.purple,
+  splashColor: AppColors.grey,
+  highlightColor: AppColors.grey,
   inputDecorationTheme: InputDecorationTheme(
     fillColor: AppColors.darkGrey,
     enabledBorder: OutlineInputBorder(

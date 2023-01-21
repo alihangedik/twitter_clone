@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/pages/message.dart';
+import 'package:twitter_clone/pages/notifications_setting.dart';
 import 'package:twitter_clone/pages/search.dart';
 import 'package:twitter_clone/icons.dart';
+import 'package:twitter_clone/pages/search_setting.dart';
 import 'package:twitter_clone/theme/colors.dart';
 
 import '../pages/home.dart';
@@ -192,8 +194,25 @@ class _TwTabbarViewState extends State<TwTabbarView> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: currentIndex == 0
                 ? const SizedBox()
-                : SvgPicture.string(AppIcons.setting,
-                    height: 20, color: AppColors.white),
+                : IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => currentIndex == 1
+                              ? const SearchSetting()
+                              : currentIndex == 2
+                                  ? const NotificationsSetting()
+                                  : const SizedBox()),
+                        ),
+                      );
+                    },
+                    icon: SvgPicture.string(AppIcons.setting,
+                        height: 20, color: AppColors.white),
+                  ),
           ),
         ],
         title: _appBarItems,

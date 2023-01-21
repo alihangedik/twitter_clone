@@ -49,7 +49,7 @@ class _NotificationsState extends State<Notifications> {
           ]);
   Widget get _listviewSeparated => RefreshIndicator(
         onRefresh: () {
-          return Future.delayed(Duration(milliseconds: 500));
+          return Future.delayed(const Duration(milliseconds: 500));
         },
         child: ListView.separated(
           controller: widget.controller,

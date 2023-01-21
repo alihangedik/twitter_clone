@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/model/trends_model.dart';
 import 'package:twitter_clone/pages/notifications.dart';
-
-import '../icons.dart';
 
 class Search extends StatefulWidget {
   const Search(this.scrollController, {super.key});
@@ -20,7 +17,7 @@ class _SearchState extends State<Search> {
   void initState() {
     super.initState();
     _trendsModel = TrendsModel(
-        hashtag: '#alihangedik',
+        hashtag: '#usedevnet',
         category: 'Gündemdekiler',
         tweetCount: '530B Tweet');
   }
