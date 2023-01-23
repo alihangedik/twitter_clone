@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twitter_clone/icons.dart';
 import 'package:twitter_clone/pages/notifications.dart';
 import 'package:twitter_clone/products/home_tabbar.dart';
 import 'package:twitter_clone/products/profile_tabbar.dart';
@@ -26,7 +28,7 @@ class _ProfileState extends State<Profile> {
       if (scrollController.offset <= 0) {
         isAppbarClose = false;
       } else if (scrollController.offset >=
-          scrollController.position.maxScrollExtent) {
+          scrollController.position.minScrollExtent) {
         isAppbarClose = true;
       } else {
         isAppbarClose = scrollController.offset > lastOffset ? true : false;
@@ -51,54 +53,110 @@ class _ProfileState extends State<Profile> {
   );
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: [
-        containerAppbar,
-        Container(
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        body: Container(
           height: MediaQuery.of(context).size.height,
-          child: ListView(
-            controller: scrollController,
-            shrinkWrap: true,
+          child: Stack(
             children: [
-              Column(
+              ListView(
+                controller: scrollController,
+                shrinkWrap: true,
                 children: [
                   Column(
                     children: [
-                      Stack(
-                        clipBehavior: Clip.none,
+                      Column(
                         children: [
-                          containerHeader,
-                          circleAvatar,
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              containerHeader,
+                              circleAvatar,
+                            ],
+                          ),
+                          editProfileButton('Profili Düzenle'),
+                          userInfo,
+                          profileTabBar,
                         ],
                       ),
-                      editProfileButton('Profili Düzenle'),
-                      userInfo,
-                      TweetList(widget.controller),
-                      // profileTabBar,
+                      Container(
+                        height: MediaQuery.of(context).size.height * 10,
+                        child: TabBarView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              TweetList(
+                                widget.controller,
+                                isScrollable: false,
+                              ),
+                              TweetList(widget.controller, isScrollable: false),
+                              TweetList(widget.controller, isScrollable: false),
+                              TweetList(widget.controller, isScrollable: false),
+                            ]),
+                      ),
                     ],
                   ),
-                  // Expanded(
-                  //   child: TabBarView(children: [
-                  //     TweetList(widget.controller),
-                  //     TweetList(widget.controller),
-                  //     TweetList(widget.controller),
-                  //     TweetList(widget.controller),
-                  //   ]),
-                  // ),
                 ],
+              ),
+              appbar,
+              Positioned(
+                top: 47,
+                left: 0,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_circle_left_rounded,
+                    size: 40,
+                  ),
+                ),
+              ),
+              const Positioned(
+                top: 60,
+                right: 10,
+                child: Icon(
+                  Icons.more_vert_sharp,
+                  size: 30,
+                ),
+              ),
+              Positioned(
+                top: 60,
+                right: 50,
+                child: SvgPicture.string(
+                  AppIcons.search,
+                  height: 30,
+                  color: AppColors.white,
+                ),
               ),
             ],
           ),
         ),
-      ],
-    ));
+      ),
+    );
   }
 
-  Widget get appbar => AppBar(
-        title: Text('Alihan Gedik'),
-        toolbarOpacity: isAppbarClose == true ? 1 : 0,
-        toolbarHeight: isAppbarClose == true ? 50 : 0,
+  Widget get appbar => AnimatedContainer(
+        decoration: BoxDecoration(
+            color: Colors.black.withOpacity(isAppbarClose == true ? 1 : 0)),
+        height: 100,
+        duration: const Duration(milliseconds: 400),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Wrap(direction: Axis.vertical, children: [
+              const Text('Alihan Gedik'),
+              Text(
+                '618 Tweet',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ]),
+          ),
+          toolbarHeight: isAppbarClose == true ? 70 : 0,
+        ),
       );
   Widget get containerAppbar => AnimatedContainer(
         width: MediaQuery.of(context).size.width,
@@ -120,15 +178,18 @@ class _ProfileState extends State<Profile> {
         child: headerImage,
       );
 
-  Widget get circleAvatar => Positioned(
-        bottom: isAppbarClose == true ? -30 : -60,
-        left: 20,
-        child: CircleAvatar(
-          radius: isAppbarClose == true ? 25 : 45,
-          backgroundColor: Colors.black,
+  Widget get circleAvatar => AnimatedContainer(
+        duration: const Duration(milliseconds: 400),
+        child: Positioned(
+          bottom: isAppbarClose == true ? -30 : -60,
+          left: 20,
           child: CircleAvatar(
-            radius: isAppbarClose == true ? 20 : 40,
-            backgroundImage: NetworkImage(avatarUrl),
+            radius: isAppbarClose == true ? 25 : 45,
+            backgroundColor: Colors.black,
+            child: CircleAvatar(
+              radius: isAppbarClose == true ? 20 : 40,
+              backgroundImage: NetworkImage(avatarUrl),
+            ),
           ),
         ),
       );

@@ -28,8 +28,14 @@ class _HomeState extends State<Home> with SpacesMixin {
           toolbarHeight: 0,
         ),
         body: TabBarView(children: [
-          TweetList(widget.controller),
-          TweetList(widget.controller)
+          TweetList(
+            widget.controller,
+            isScrollable: true,
+          ),
+          TweetList(
+            widget.controller,
+            isScrollable: true,
+          )
         ]),
       ),
     );

@@ -8,8 +8,9 @@ import '../theme/colors.dart';
 import 'full_screen_image.dart';
 
 class TweetList extends StatefulWidget {
-  const TweetList(this.controller, {super.key});
+  const TweetList(this.controller, {super.key, required this.isScrollable});
   final ScrollController controller;
+  final bool isScrollable;
 
   @override
   State<TweetList> createState() => _TweetListState();
@@ -29,9 +30,12 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
   }
 
   Widget get listview => ListView.separated(
+        physics: widget.isScrollable == true
+            ? AlwaysScrollableScrollPhysics()
+            : NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         separatorBuilder: (context, index) => const Divider(),
-        itemCount: 10,
+        itemCount: 19,
         itemBuilder: (BuildContext context, int index) {
           return listviewCard;
         },
