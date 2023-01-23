@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/pages/message.dart';
 import 'package:twitter_clone/pages/notifications_setting.dart';
+import 'package:twitter_clone/pages/profile.dart';
 import 'package:twitter_clone/pages/search.dart';
 import 'package:twitter_clone/icons.dart';
 import 'package:twitter_clone/pages/search_setting.dart';
@@ -21,7 +22,37 @@ class TwTabbarView extends StatefulWidget {
   State<TwTabbarView> createState() => _TwTabbarViewState();
 }
 
+String avatarUrl =
+    'https://avatars.githubusercontent.com/u/71148065?s=400&u=cd2b1a170fa19d2b44518a53d745ef860427ce25&v=4';
+Widget get followerRow => Row(
+      children: const [
+        Text('243 Takip Edilen'),
+        SizedBox(
+          width: 20,
+        ),
+        Text('40 Takipçi'),
+      ],
+    );
+
 class _TwTabbarViewState extends State<TwTabbarView> {
+  appbarPosition() {
+    _scrollController.addListener(() {
+      if (_scrollController.offset <= 0) {
+        isHeaderClose = false;
+      } else if (_scrollController.offset >=
+          _scrollController.position.maxScrollExtent) {
+        isHeaderClose = true;
+      } else {
+        isHeaderClose = _scrollController.offset > lastOffset ? true : false;
+      }
+
+      setState(() {
+        lastOffset = _scrollController.offset;
+      });
+      // print(_scrollController.offset);
+    });
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // _showSheet() => showModalBottomSheet(
@@ -49,8 +80,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   //       },
   //       context: context,
   //     );
-  String avatarUrl =
-      'https://avatars.githubusercontent.com/u/71148065?s=400&u=cd2b1a170fa19d2b44518a53d745ef860427ce25&v=4';
+
   bool isHeaderClose = false;
   double lastOffset = 0;
   late ScrollController _scrollController;
@@ -68,22 +98,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-
-    _scrollController.addListener(() {
-      if (_scrollController.offset <= 0) {
-        isHeaderClose = false;
-      } else if (_scrollController.offset >=
-          _scrollController.position.maxScrollExtent) {
-        isHeaderClose = true;
-      } else {
-        isHeaderClose = _scrollController.offset > lastOffset ? true : false;
-      }
-
-      setState(() {
-        lastOffset = _scrollController.offset;
-      });
-      // print(_scrollController.offset);
-    });
+    appbarPosition();
   }
 
   @override
@@ -318,17 +333,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
                   const SizedBox(
                     height: 10,
                   ),
-                  SizedBox(
-                    child: Row(
-                      children: const [
-                        Text('241 Takip Edilen'),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text('39 Takipçi'),
-                      ],
-                    ),
-                  )
+                  SizedBox(child: followerRow)
                 ],
               ),
             ],
@@ -344,6 +349,12 @@ class _TwTabbarViewState extends State<TwTabbarView> {
   Widget _navbarItems(String title, String icon) => Column(
         children: [
           ListTile(
+            onTap: (() => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => Profile(_scrollController)),
+                  ),
+                )),
             leading: SvgPicture.string(
               icon,
               color: AppColors.white,

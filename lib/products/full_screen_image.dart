@@ -27,11 +27,11 @@ class _FullScreenImageState extends State<FullScreenImage>
   @override
   void initState() {
     super.initState();
-    animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-          ..addListener(() {
-            transformationController.value = animation.value;
-          });
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500))
+      ..addListener(() {
+        transformationController.value = animation.value;
+      });
   }
 
   @override
@@ -147,7 +147,7 @@ class _FullScreenImageState extends State<FullScreenImage>
               ),
             ),
             Positioned(
-              bottom: 50,
+              bottom: 0,
               child: Row(
                 children: [cardIconRow],
               ),
@@ -158,10 +158,14 @@ class _FullScreenImageState extends State<FullScreenImage>
     );
   }
 
-  Widget get cardIconRow => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: SizedBox(
-          width: 350,
+  Widget get cardIconRow => Container(
+        alignment: Alignment.topCenter,
+        decoration: BoxDecoration(
+            color: Colors.black.withOpacity(isOnTap == true ? 0 : 0.7)),
+        width: MediaQuery.of(context).size.width,
+        height: 100,
+        child: Padding(
+          padding: const EdgeInsets.all(22.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
