@@ -388,8 +388,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
             children: [
               _navbarHeaderCard,
               _divider,
-              SizedBox(
-                height: 600,
+              Expanded(
                 child: ListView(
                   shrinkWrap: true,
                   children: [

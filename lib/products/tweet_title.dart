@@ -1,68 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:twitter_clone/pages/tweet_detail.dart';
 import 'package:twitter_clone/products/spaces.dart';
+import 'package:twitter_clone/products/tweet_list.dart';
 
 import '../icons.dart';
-import '../theme/colors.dart';
 import '../pages/full_screen_image.dart';
+import '../theme/colors.dart';
 
-class TweetList extends StatefulWidget {
-  const TweetList(this.controller, {super.key, required this.isScrollable});
-  final ScrollController controller;
-  final bool isScrollable;
+class TweetTitle extends StatefulWidget with SpacesMixin {
+  TweetTitle({super.key});
 
   @override
-  State<TweetList> createState() => _TweetListState();
+  State<TweetTitle> createState() => _TweetTitleState();
 }
 
-String randomImageAvatar = "https://loremflickr.com/320/240";
-String randomImage = "https://picsum.photos/200/300";
-String cardTitle =
-    'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir.';
-int currentIndex = 0;
-bool isTap = false;
-
-class _TweetListState extends State<TweetList> with SpacesMixin {
+class _TweetTitleState extends State<TweetTitle> {
   @override
   Widget build(BuildContext context) {
-    return listview;
+    return tweetItems;
   }
-
-  Widget get listview => ListView.separated(
-        controller: widget.controller,
-        physics: widget.isScrollable == true
-            ? const AlwaysScrollableScrollPhysics()
-            : const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        separatorBuilder: (context, index) => const Divider(
-          height: 30,
-        ),
-        itemCount: 19,
-        itemBuilder: (BuildContext context, int index) {
-          return listviewCard;
-        },
-      );
-  Widget get listviewCard => Card(
-        elevation: 0,
-        child: ListTile(
-          onTap: (() {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) => const TweetDetails()),
-              ),
-            );
-          }),
-          tileColor: Theme.of(context).scaffoldBackgroundColor,
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage(randomImageAvatar),
-          ),
-          title: tweetItems,
-        ),
-      );
 
   Padding get tweetItems {
     return Padding(
@@ -75,10 +32,8 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               listCardTitle('Alperen Özkan'),
-              lowWidth,
               listCardHandle('alperenozkan'),
               listCardTime(' ・ 16h'),
-              lowWidth,
               const Icon(
                 Icons.more_horiz,
                 size: 17,
@@ -86,9 +41,7 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
             ],
           ),
           Text(cardTitle),
-          lowHeight,
-          _placeholder,
-          lowHeight,
+          placeholder,
           cardIconRow,
         ],
       ),
@@ -99,6 +52,7 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
         title,
         style: titleTextStyle,
       );
+
   Widget listCardHandle(String title) => Text(
         '@$title',
         style: Theme.of(context)
@@ -106,11 +60,13 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
             .bodySmall
             ?.copyWith(color: AppColors.grey),
       );
+
   Widget listCardTime(String title) => Text(
         title,
         style: Theme.of(context).textTheme.bodySmall,
       );
-  Widget get _placeholder => SizedBox(
+
+  Widget get placeholder => SizedBox(
         height: 300,
         width: 300,
         child: ClipRRect(
@@ -166,6 +122,7 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
           ),
         ],
       );
+
   final TextStyle titleTextStyle =
       const TextStyle(fontWeight: FontWeight.w800, color: AppColors.white);
 }

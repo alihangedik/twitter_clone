@@ -22,6 +22,22 @@ class _ProfileState extends State<Profile> {
   bool isAppbarClose = false;
   double lastOffset = 0.0;
   String randomImage = "https://picsum.photos/200/300";
+  showContextMenu() {
+    showMenu(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        context: context,
+        position: RelativeRect.fromDirectional(
+            textDirection: TextDirection.rtl,
+            start: 0,
+            top: 0,
+            end: 90,
+            bottom: 0),
+        items: [
+          const PopupMenuItem(child: Text('Paylaş')),
+          const PopupMenuItem(child: Text('Taslaklar')),
+          const PopupMenuItem(child: Text('Bulunduğun Listeler')),
+        ]);
+  }
 
   appbarPosition() {
     scrollController.addListener(() {
@@ -55,84 +71,96 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: [
-              ListView(
-                controller: scrollController,
-                shrinkWrap: true,
-                children: [
-                  Column(
-                    children: [
-                      Column(
-                        children: [
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              containerHeader,
-                              circleAvatar,
-                            ],
-                          ),
-                          editProfileButton('Profili Düzenle'),
-                          userInfo,
-                          profileTabBar,
-                        ],
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 10,
-                        child: TabBarView(
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [
-                              TweetList(
-                                widget.controller,
-                                isScrollable: false,
-                              ),
-                              TweetList(widget.controller, isScrollable: false),
-                              TweetList(widget.controller, isScrollable: false),
-                              TweetList(widget.controller, isScrollable: false),
-                            ]),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              appbar,
-              Positioned(
-                top: 47,
-                left: 0,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_circle_left_rounded,
-                    size: 40,
-                  ),
+      child: SafeArea(
+        child: Scaffold(
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: [
+                ListView(
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  children: [
+                    Column(
+                      children: [
+                        buildProfileHeader(),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 10,
+                          child: TabBarView(
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: [
+                                TweetList(
+                                  widget.controller,
+                                  isScrollable: false,
+                                ),
+                                TweetList(widget.controller,
+                                    isScrollable: false),
+                                TweetList(widget.controller,
+                                    isScrollable: false),
+                                TweetList(widget.controller,
+                                    isScrollable: false),
+                              ]),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              const Positioned(
-                top: 60,
-                right: 10,
-                child: Icon(
-                  Icons.more_vert_sharp,
-                  size: 30,
-                ),
-              ),
-              Positioned(
-                top: 60,
-                right: 50,
-                child: SvgPicture.string(
-                  AppIcons.search,
-                  height: 30,
-                  color: AppColors.white,
-                ),
-              ),
-            ],
+                appbar,
+                headerIconButtons(
+                    const Icon(
+                      Icons.arrow_circle_left_rounded,
+                      size: 35,
+                    ),
+                    null, () {
+                  Navigator.pop(context);
+                }),
+                headerIconButtons(
+                    const Icon(
+                      Icons.more_horiz_rounded,
+                      size: 35,
+                    ),
+                    10,
+                    showContextMenu),
+                headerIconButtons(
+                    SvgPicture.string(
+                      AppIcons.search,
+                      height: 25,
+                      color: AppColors.white,
+                    ),
+                    50,
+                    null)
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Positioned headerIconButtons(icon, double? right, onpressed) {
+    return Positioned(
+      right: right,
+      child: IconButton(
+        onPressed: onpressed,
+        icon: icon,
+      ),
+    );
+  }
+
+  Column buildProfileHeader() {
+    return Column(
+      children: [
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            containerHeader,
+            circleAvatar,
+          ],
+        ),
+        editProfileButton('Profili Düzenle'),
+        userInfo,
+        profileTabBar,
+      ],
     );
   }
 
@@ -145,19 +173,24 @@ class _ProfileState extends State<Profile> {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Wrap(direction: Axis.vertical, children: [
-              const Text('Alihan Gedik'),
-              Text(
-                '618 Tweet',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ]),
-          ),
-          toolbarHeight: isAppbarClose == true ? 70 : 0,
+          toolbarHeight: isAppbarClose == true ? 50 : 0,
+          title: buildAppbarInfo(),
         ),
       );
+
+  Padding buildAppbarInfo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Wrap(direction: Axis.vertical, children: [
+        const Text('Alihan Gedik'),
+        Text(
+          '618 Tweet',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ]),
+    );
+  }
+
   Widget get containerAppbar => AnimatedContainer(
         width: MediaQuery.of(context).size.width,
         height: 130,
@@ -181,7 +214,7 @@ class _ProfileState extends State<Profile> {
   Widget get circleAvatar => AnimatedContainer(
         duration: const Duration(milliseconds: 400),
         child: Positioned(
-          bottom: isAppbarClose == true ? -30 : -60,
+          bottom: -55,
           left: 20,
           child: CircleAvatar(
             radius: isAppbarClose == true ? 25 : 45,

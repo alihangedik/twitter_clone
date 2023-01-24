@@ -8,7 +8,7 @@ import 'package:twitter_clone/products/spaces.dart';
 import 'package:twitter_clone/products/tweet_list.dart';
 import 'package:twitter_clone/theme/colors.dart';
 
-import '../products/full_screen_image.dart';
+import 'full_screen_image.dart';
 
 class Home extends StatefulWidget {
   const Home(this.controller, {super.key});
@@ -18,6 +18,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SpacesMixin {
+  late ScrollController scrollController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController = ScrollController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
