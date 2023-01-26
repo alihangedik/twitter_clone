@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gesture_zoom_box/gesture_zoom_box.dart';
 
 import 'package:twitter_clone/theme/colors.dart';
 
@@ -18,9 +19,9 @@ class _FullScreenImageState extends State<FullScreenImage>
     with SingleTickerProviderStateMixin {
   TransformationController transformationController =
       TransformationController();
-  TapDownDetails tapDownDetails = TapDownDetails();
+  // TapDownDetails tapDownDetails = TapDownDetails();
   late AnimationController animationController;
-  var animation;
+  // var animation;
 
   bool isOnTap = false;
 
@@ -28,10 +29,10 @@ class _FullScreenImageState extends State<FullScreenImage>
   void initState() {
     super.initState();
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500))
-      ..addListener(() {
-        transformationController.value = animation.value;
-      });
+        vsync: this, duration: const Duration(milliseconds: 500));
+    // ..addListener(() {
+    //   transformationController.value = animation.value;
+    // });
   }
 
   @override
@@ -40,28 +41,28 @@ class _FullScreenImageState extends State<FullScreenImage>
     animationController.dispose();
   }
 
-  onDoubleTapDown(TapDownDetails details) {
-    tapDownDetails = details;
-  }
+  // onDoubleTapDown(TapDownDetails details) {
+  //   tapDownDetails = details;
+  // }
 
-  onDoubleTap() {
-    Matrix4 endMatrix;
-    if (transformationController.value != Matrix4.identity()) {
-      endMatrix = Matrix4.identity();
-    } else {
-      final position = tapDownDetails.localPosition;
-      endMatrix = Matrix4.identity()
-        ..translate(-position.dx, -position.dy)
-        ..scale(1.5);
-    }
-    animation =
-        Matrix4Tween(begin: transformationController.value, end: endMatrix)
-            .animate(
-      CurveTween(curve: Curves.fastLinearToSlowEaseIn)
-          .animate(animationController),
-    );
-    animationController.forward(from: 0);
-  }
+  // onDoubleTap() {
+  //   Matrix4 endMatrix;
+  //   if (transformationController.value != Matrix4.identity()) {
+  //     endMatrix = Matrix4.identity();
+  //   } else {
+  //     final position = tapDownDetails.localPosition;
+  //     endMatrix = Matrix4.identity()
+  //       ..translate(-position.dx, -position.dy)
+  //       ..scale(1.5);
+  //   }
+  //   animation =
+  //       Matrix4Tween(begin: transformationController.value, end: endMatrix)
+  //           .animate(
+  //     CurveTween(curve: Curves.fastLinearToSlowEaseIn)
+  //         .animate(animationController),
+  //   );
+  //   animationController.forward(from: 0);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +94,8 @@ class _FullScreenImageState extends State<FullScreenImage>
             isOnTap = !isOnTap;
           });
         }),
-        onDoubleTap: onDoubleTap,
-        onDoubleTapDown: onDoubleTapDown,
+        // onDoubleTap: onDoubleTap,
+        // onDoubleTapDown: onDoubleTapDown,
         child: Stack(
           children: [
             InteractiveViewer(
@@ -103,11 +104,15 @@ class _FullScreenImageState extends State<FullScreenImage>
               maxScale: 2.6,
               panEnabled: false,
               scaleEnabled: true,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(widget.image),
-                    fit: BoxFit.contain,
+              child: GestureZoomBox(
+                duration: const Duration(milliseconds: 50),
+                doubleTapScale: 3.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.image),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
