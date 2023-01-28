@@ -51,7 +51,7 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: ((context) => const TweetDetails()),
+                builder: ((context) => TweetDetails(widget.controller)),
               ),
             );
           }),

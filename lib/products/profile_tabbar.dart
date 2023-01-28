@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../theme/colors.dart';
 
-PreferredSize get profileTabBar => const PreferredSize(
-      preferredSize: Size.fromHeight(50),
+PreferredSize get profileTabBar => PreferredSize(
+      preferredSize: const Size.fromHeight(50),
       child: Material(
-        color: AppColors.black,
-        child: TabBar(
+        color: AppColors.black.withOpacity(0.01),
+        child: const TabBar(
           physics: NeverScrollableScrollPhysics(),
           isScrollable: true,
           indicatorWeight: 4,
