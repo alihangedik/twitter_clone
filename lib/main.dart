@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/pages/splash.dart';
 
 import 'package:twitter_clone/view/tabbar_view.dart';
 import 'package:twitter_clone/theme/theme.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Twitter',
-        home: const TwTabbarView(),
+        home: Splash(null),
         theme: themeDark);
   }
 }

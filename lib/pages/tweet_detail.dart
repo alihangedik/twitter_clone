@@ -9,7 +9,7 @@ import '../view/tabbar_view.dart';
 import 'full_screen_image.dart';
 
 class TweetDetails extends StatefulWidget {
-  ScrollController controller;
+  ScrollController? controller;
 
   TweetDetails(this.controller, {super.key});
 

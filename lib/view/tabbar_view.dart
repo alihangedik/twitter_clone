@@ -15,11 +15,11 @@ import 'package:twitter_clone/theme/colors.dart';
 import '../pages/home.dart';
 import '../pages/notifications.dart';
 
-class TwTabbarView extends StatefulWidget {
-  const TwTabbarView({super.key});
+class TwitterTabbarView extends StatefulWidget {
+  const TwitterTabbarView({super.key});
 
   @override
-  State<TwTabbarView> createState() => _TwTabbarViewState();
+  State<TwitterTabbarView> createState() => _TwitterTabbarViewState();
 }
 
 String avatarUrl =
@@ -34,7 +34,7 @@ Widget get followerRow => Row(
       ],
     );
 
-class _TwTabbarViewState extends State<TwTabbarView> {
+class _TwitterTabbarViewState extends State<TwitterTabbarView> {
   appbarPosition() {
     _scrollController.addListener(() {
       if (_scrollController.offset <= 0) {
