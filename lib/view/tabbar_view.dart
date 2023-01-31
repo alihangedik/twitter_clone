@@ -10,6 +10,7 @@ import 'package:twitter_clone/pages/profile.dart';
 import 'package:twitter_clone/pages/search.dart';
 import 'package:twitter_clone/icons.dart';
 import 'package:twitter_clone/pages/search_setting.dart';
+import 'package:twitter_clone/pages/subjects.dart';
 import 'package:twitter_clone/theme/colors.dart';
 
 import '../pages/home.dart';
@@ -346,13 +347,13 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         color: Theme.of(context).scaffoldBackgroundColor,
         child: _navBarHeaderListTile,
       );
-  Widget _navbarItems(String title, String icon) => Column(
+  Widget _navbarItems(String title, String icon, route) => Column(
         children: [
           ListTile(
             onTap: (() => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: ((context) => Profile(_scrollController)),
+                    builder: ((context) => route),
                   ),
                 )),
             leading: SvgPicture.string(
@@ -372,11 +373,12 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [
-          _navbarItems('Profil', AppIcons.profile),
-          _navbarItems('Konular', AppIcons.subjects),
-          _navbarItems('Yer İşaretleri', AppIcons.placeMarks),
-          _navbarItems('Listeler', AppIcons.lists),
-          _navbarItems('Twitter Çevresi', AppIcons.twitterCircle),
+          _navbarItems('Profil', AppIcons.profile, Profile(_scrollController)),
+          _navbarItems('Konular', AppIcons.subjects, const Subjects()),
+          _navbarItems('Yer İşaretleri', AppIcons.placeMarks, const Subjects()),
+          _navbarItems('Listeler', AppIcons.lists, const Subjects()),
+          _navbarItems(
+              'Twitter Çevresi', AppIcons.twitterCircle, const Subjects())
         ],
       );
 
