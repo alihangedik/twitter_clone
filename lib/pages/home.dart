@@ -12,7 +12,7 @@ import 'full_screen_image.dart';
 
 class Home extends StatefulWidget {
   const Home(this.controller, {super.key});
-  final ScrollController? controller;
+  final ScrollController controller;
   @override
   State<Home> createState() => _HomeState();
 }

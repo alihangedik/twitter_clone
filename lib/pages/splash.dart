@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/pages/home.dart';
+import 'package:twitter_clone/view/tabbar_view.dart';
 
 import '../icons.dart';
 import '../theme/colors.dart';
 
 class Splash extends StatefulWidget {
-  ScrollController? controller;
-
-  Splash(this.controller, {super.key});
+  Splash({super.key});
 
   @override
   State<Splash> createState() => _SplashState();
@@ -17,11 +16,11 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   goHome() async {
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(widget.controller),
-          ));
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => Home(t),
+      //     ));
     });
   }
 

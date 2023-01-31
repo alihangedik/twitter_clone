@@ -10,7 +10,7 @@ import '../pages/full_screen_image.dart';
 
 class TweetList extends StatefulWidget {
   const TweetList(this.controller, {super.key, required this.isScrollable});
-  final ScrollController? controller;
+  final ScrollController controller;
   final bool isScrollable;
 
   @override

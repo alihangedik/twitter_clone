@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Twitter',
-        home: Splash(null),
+        home: TwTabbarView(),
         theme: themeDark);
   }
 }
