@@ -38,11 +38,19 @@ class _NotificationsState extends State<Notifications> {
     );
   }
 
-  PreferredSizeWidget get _tabBar => const TabBar(
+  PreferredSizeWidget get _tabBar => TabBar(
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+              return states.contains(MaterialState.focused)
+                  ? null
+                  : Colors.transparent;
+            },
+          ),
           indicatorWeight: 4,
           indicatorColor: AppColors.twitterBlue,
           indicatorSize: TabBarIndicatorSize.label,
-          tabs: [
+          tabs: const [
             Tab(child: Text('Tümü')),
             Tab(child: Text('Onaylanmış')),
             Tab(child: Text('Bahsedenler')),

@@ -21,7 +21,6 @@ class _HomeState extends State<Home> with SpacesMixin {
   late ScrollController scrollController;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scrollController = ScrollController();
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:twitter_clone/pages/bookmarks.dart';
 import 'package:twitter_clone/pages/message.dart';
 import 'package:twitter_clone/pages/notifications_setting.dart';
 import 'package:twitter_clone/pages/profile.dart';
@@ -375,7 +376,8 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         children: [
           _navbarItems('Profil', AppIcons.profile, Profile(_scrollController)),
           _navbarItems('Konular', AppIcons.subjects, const Subjects()),
-          _navbarItems('Yer İşaretleri', AppIcons.placeMarks, const Subjects()),
+          _navbarItems(
+              'Yer İşaretleri', AppIcons.placeMarks, const BookMarks()),
           _navbarItems('Listeler', AppIcons.lists, const Subjects()),
           _navbarItems(
               'Twitter Çevresi', AppIcons.twitterCircle, const Subjects())

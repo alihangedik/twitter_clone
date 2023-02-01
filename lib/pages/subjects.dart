@@ -24,22 +24,30 @@ class _SubjectsState extends State<Subjects> {
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(60),
             child: Column(
-              children: const [
-                Divider(
+              children: [
+                const Divider(
                   height: 50,
                   color: AppColors.grey,
                 ),
                 TabBar(
-                  labelPadding: EdgeInsets.only(bottom: 15),
+                  splashFactory: NoSplash.splashFactory,
+                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                      return states.contains(MaterialState.focused)
+                          ? null
+                          : Colors.transparent;
+                    },
+                  ),
+                  labelPadding: const EdgeInsets.only(bottom: 15),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorColor: AppColors.twitterBlue,
-                  tabs: [
+                  tabs: const [
                     Text('Takip Edilenler'),
                     Text('Önerilenler'),
                     Text('İlgilenmiyorum'),
                   ],
                 ),
-                Divider(
+                const Divider(
                   height: 0,
                   color: AppColors.grey,
                 ),
