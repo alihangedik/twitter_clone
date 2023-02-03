@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:twitter_clone/products/subject_items.dart';
 
-import '../icons.dart';
-import '../theme/colors.dart';
-
-class SubjectFollowers extends StatelessWidget with SubjectItemsMixin {
-  const SubjectFollowers({super.key});
+class SubjectFollowers extends StatefulWidget {
+  SubjectFollowers({super.key});
 
   @override
+  State<SubjectFollowers> createState() => _SubjectFollowersState();
+}
+
+class _SubjectFollowersState extends State<SubjectFollowers>
+    with SubjectItemsMixin, TickerProviderStateMixin {
+  @override
   Widget build(BuildContext context) {
+    TabController tabController = TabController(length: 4, vsync: this);
     return Scaffold(
       body: Column(
         children: [
@@ -20,11 +24,19 @@ class SubjectFollowers extends StatelessWidget with SubjectItemsMixin {
                 children: [
                   headerInfoText,
                   divider,
-                  subjectList,
+                  subjectList(() {
+                    setState(() {
+                      isTap = !isTap;
+                    });
+                  }),
                   divider,
                   subjectHeader,
                   moreSubject,
-                  moreSubjectButton(context)
+                  moreSubjectButton(context, () {
+                    setState(() {
+                      tabController.index = 1;
+                    });
+                  })
                 ],
               ),
             ),

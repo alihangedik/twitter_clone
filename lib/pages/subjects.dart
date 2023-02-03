@@ -57,9 +57,9 @@ class _SubjectsState extends State<Subjects> {
         ),
         body: TabBarView(
           children: [
-            const SubjectFollowers(),
+            SubjectFollowers(),
             SubjectRecommended(),
-            const SubjectsNotInterested()
+            SubjectsNotInterested()
           ],
         ),
       ),

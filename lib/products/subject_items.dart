@@ -5,6 +5,8 @@ import '../icons.dart';
 import '../theme/colors.dart';
 
 mixin SubjectItemsMixin {
+  bool isTap = false;
+
   Widget get headerInfoText => const Center(
         child: Padding(
           padding: EdgeInsets.all(25.0),
@@ -14,25 +16,35 @@ mixin SubjectItemsMixin {
           ),
         ),
       );
-  Widget get subjectList => ListView.builder(
+  Widget subjectList(onPressed) => ListView.builder(
       itemCount: 25,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: ((context, index) => subjectListTile(
-          'Aksiyon ve macera filmleri', 'Film Türü', 'Takip Ediliyor')));
+          'Aksiyon ve macera filmleri',
+          'Film Türü',
+          '${isTap == false ? "Takip Ediliyor" : "Takip Et"}',
+          onPressed,
+          isTap == false
+              ? MaterialStateProperty.all(AppColors.black)
+              : MaterialStateProperty.all(AppColors.white),
+          isTap == false ? AppColors.white : AppColors.black)));
 
-  Widget subjectListTile(title, subtitle, isFollow) => ListTile(
+  Widget subjectListTile(
+          title, subtitle, isFollow, onPressed, backgorundColor, textColor) =>
+      ListTile(
         trailing: OutlinedButton(
           style: ButtonStyle(
+              backgroundColor: backgorundColor,
               padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(horizontal: 20)),
               shape: MaterialStateProperty.all(const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30))))),
-          onPressed: (() {}),
-          child: Text(
-            isFollow,
-            style: const TextStyle(color: AppColors.white),
-          ),
+          onPressed: onPressed,
+          child: Text(isFollow,
+              style: TextStyle(
+                color: textColor,
+              )),
         ),
         minVerticalPadding: 20,
         subtitle: Text(subtitle),
@@ -73,11 +85,12 @@ mixin SubjectItemsMixin {
         scrollDirection: Axis.horizontal,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Wrap(
+            direction: Axis.vertical,
+            runAlignment: WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.start,
             children: [
-              Row(
+              Wrap(
                 children: [
                   subjectChip('Televizyon'),
                   subjectChip('Oyun Geliştirme'),
@@ -87,7 +100,7 @@ mixin SubjectItemsMixin {
                   subjectChip('Rock'),
                 ],
               ),
-              Row(
+              Wrap(
                 children: [
                   subjectChip('Müzik'),
                   subjectChip('Cristiano Ronaldo'),
@@ -97,7 +110,7 @@ mixin SubjectItemsMixin {
                   subjectChip('Naruto'),
                 ],
               ),
-              Row(
+              Wrap(
                 children: [
                   subjectChip('Video oyunları'),
                   subjectChip('Sinema ve televizyon'),
@@ -111,10 +124,10 @@ mixin SubjectItemsMixin {
           ),
         ),
       );
-  Widget moreSubjectButton(context) => Padding(
+  Widget moreSubjectButton(context, onPressed) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child:
-            TextButton(onPressed: () {}, child: const Text('Daha Fazla Konu')),
+        child: TextButton(
+            onPressed: onPressed, child: const Text('Daha Fazla Konu')),
       );
 
   Widget subjectChip(title) => Padding(
