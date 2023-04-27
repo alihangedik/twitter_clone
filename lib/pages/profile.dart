@@ -18,6 +18,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  bool isCloseAppbar = false;
   late ScrollController scrollController;
   bool isAppbarClose = false;
   double lastOffset = 0.0;
@@ -62,9 +63,9 @@ class _ProfileState extends State<Profile> {
     appbarPosition();
   }
 
-  final themeBioText = const TextStyle(
+  final themeBioText = TextStyle(
     fontSize: 14,
-    color: AppColors.grey,
+    color: AppColors.tweepinkLight,
   );
   @override
   Widget build(BuildContext context) {
@@ -72,136 +73,146 @@ class _ProfileState extends State<Profile> {
       length: 4,
       child: SafeArea(
         child: Scaffold(
+            backgroundColor: AppColors.white,
             body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              bottom: profileTabBar,
-              leading: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(
-                  Icons.arrow_circle_left_rounded,
-                  size: 35,
-                ),
-              ),
-              actions: [
-                Wrap(
-                  spacing: 10,
-                  runAlignment: WrapAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.search,
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: AppColors.white,
+                  bottom: profileTabBar,
+                  leading: IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icon(
+                      Icons.arrow_circle_left_rounded,
                       size: 35,
+                      color: AppColors.tweepink,
                     ),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: const Icon(Icons.more_horiz_rounded, size: 35),
-                      onPressed: () => showContextMenu(),
-                    ),
+                  ),
+                  actions: [
+                    Wrap(
+                      spacing: 10,
+                      runAlignment: WrapAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search,
+                          color: AppColors.tweepink,
+                          size: 35,
+                        ),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.more_horiz_rounded,
+                              size: 35, color: AppColors.tweepink),
+                          onPressed: () => showContextMenu(),
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
-              pinned: true,
-              floating: false,
-              snap: false,
-              expandedHeight: 425,
+                  pinned: true,
+                  floating: false,
+                  snap: false,
+                  expandedHeight: 425,
 
-              flexibleSpace: LayoutBuilder(builder: (context, constraints) {
-                bool isCloseAppbar = constraints.maxHeight >
-                    kToolbarHeight + MediaQuery.of(context).padding.top;
-                return FlexibleSpaceBar(
-                  stretchModes: [StretchMode.blurBackground],
-                  collapseMode: CollapseMode.pin,
-                  centerTitle: false,
-                  title: isCloseAppbar == true
-                      ? Stack(
-                          children: [
-                            Positioned(
-                              top: 10,
-                              child: Wrap(
-                                  direction: Axis.vertical,
-                                  runAlignment: WrapAlignment.center,
-                                  crossAxisAlignment: WrapCrossAlignment.start,
-                                  children: [
-                                    const Text('Alihan Gedik'),
-                                    Text(
-                                      '613 Tweet',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              color: AppColors.white
-                                                  .withOpacity(
-                                                      isCloseAppbar == true
-                                                          ? 1
-                                                          : 0)),
-                                    ),
-                                  ]),
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
-                  background: Column(
-                    children: [
-                      Stack(
-                        clipBehavior: Clip.none,
+                  flexibleSpace: LayoutBuilder(builder: (context, constraints) {
+                    isCloseAppbar = constraints.maxHeight >
+                        kToolbarHeight + MediaQuery.of(context).padding.top;
+                    return FlexibleSpaceBar(
+                      stretchModes: [StretchMode.blurBackground],
+                      collapseMode: CollapseMode.pin,
+                      centerTitle: false,
+                      title: isCloseAppbar == true
+                          ? Stack(
+                              children: [
+                                Positioned(
+                                  top: 10,
+                                  child: Wrap(
+                                      direction: Axis.vertical,
+                                      runAlignment: WrapAlignment.center,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Alihan Gedik',
+                                          style: TextStyle(
+                                              color: AppColors.tweepink),
+                                        ),
+                                        Text(
+                                          '613 Tweet',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                  color: AppColors.tweepink
+                                                      .withOpacity(
+                                                          isCloseAppbar == true
+                                                              ? 1
+                                                              : 0)),
+                                        ),
+                                      ]),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
+                      background: Column(
                         children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 150,
-                            child: Image.network(
-                              randomImage,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Positioned(
-                            left: 15,
-                            bottom: -45,
-                            child: CircleAvatar(
-                              radius: 45,
-                              backgroundColor: AppColors.black,
-                            ),
-                          ),
-                          Positioned(
-                            left: 20,
-                            bottom: -40,
-                            child: AnimatedContainer(
-                              duration: Duration(milliseconds: 200),
-                              child: CircleAvatar(
-                                radius: isCloseAppbar == true ? 40 : 20,
-                                backgroundImage: NetworkImage(avatarUrl),
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 150,
+                                child: Image.network(
+                                  randomImage,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
+                              Positioned(
+                                left: 15,
+                                bottom: -45,
+                                child: CircleAvatar(
+                                  radius: 45,
+                                  backgroundColor: AppColors.white,
+                                ),
+                              ),
+                              Positioned(
+                                left: 20,
+                                bottom: -40,
+                                child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 200),
+                                  child: CircleAvatar(
+                                    radius: isCloseAppbar == true ? 40 : 20,
+                                    backgroundImage: NetworkImage(avatarUrl),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                          buildProfileHeader()
                         ],
                       ),
-                      buildProfileHeader()
-                    ],
-                  ),
-                );
-              }),
-              automaticallyImplyLeading: false,
-              // bottom: const TabBar(
-              //   tabs: [
-              //     Text('sadsd'),
-              //     Text('data'),
-              //   ],
-              // ),
-            ),
-            SliverList(delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 100,
-                  child: TabBarView(children: [
-                    TweetList(widget.controller, isScrollable: false),
-                    TweetList(widget.controller, isScrollable: false),
-                    TweetList(widget.controller, isScrollable: false),
-                    TweetList(widget.controller, isScrollable: false)
-                  ]),
-                );
-              },
-            ))
-          ],
-        )),
+                    );
+                  }),
+                  automaticallyImplyLeading: false,
+                  // bottom: const TabBar(
+                  //   tabs: [
+                  //     Text('sadsd'),
+                  //     Text('data'),
+                  //   ],
+                  // ),
+                ),
+                SliverList(delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height * 100,
+                      child: TabBarView(children: [
+                        TweetList(widget.controller, isScrollable: false),
+                        TweetList(widget.controller, isScrollable: false),
+                        TweetList(widget.controller, isScrollable: false),
+                        TweetList(widget.controller, isScrollable: false)
+                      ]),
+                    );
+                  },
+                ))
+              ],
+            )),
       ),
     );
   }
@@ -303,7 +314,7 @@ class _ProfileState extends State<Profile> {
           Icon(
             icon,
             size: 13,
-            color: AppColors.grey,
+            color: AppColors.tweepinkLight,
           ),
           Text(
             title,
@@ -317,10 +328,8 @@ class _ProfileState extends State<Profile> {
         children: [
           Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                ?.copyWith(fontWeight: FontWeight.w900),
+            style: Theme.of(context).textTheme.headline6?.copyWith(
+                fontWeight: FontWeight.w900, color: AppColors.tweepink),
           ),
           Text('@$handle', style: themeBioText),
         ],
@@ -350,7 +359,10 @@ class _ProfileState extends State<Profile> {
             crossAxisAlignment: WrapCrossAlignment.start,
             children: [
               handles('Alihan Gedik', 'alihangedik'),
-              const Text('Jr. Software Developer'),
+              Text(
+                'Jr. Software Developer',
+                style: TextStyle(color: AppColors.tweepinkLight),
+              ),
               bio('Konya, Türkiye', 'github.com/AlihanGedik',
                   'Haziran 2020 tarihinde katıldı.'),
               followerRow

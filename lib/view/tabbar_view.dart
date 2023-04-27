@@ -27,12 +27,15 @@ class TwTabbarView extends StatefulWidget {
 String avatarUrl =
     'https://avatars.githubusercontent.com/u/71148065?s=400&u=cd2b1a170fa19d2b44518a53d745ef860427ce25&v=4';
 Widget get followerRow => Row(
-      children: const [
-        Text('243 Takip Edilen'),
+      children: [
+        Text(
+          '243 Takip Edilen',
+          style: TextStyle(color: AppColors.white),
+        ),
         SizedBox(
           width: 20,
         ),
-        Text('40 Takipçi'),
+        Text('40 Takipçi', style: TextStyle(color: AppColors.white)),
       ],
     );
 
@@ -174,12 +177,12 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       child: Icon(
         icon,
         size: 30,
-        color: AppColors.twitterBlue,
+        color: AppColors.tweepink,
       ),
       label: label);
 
   Widget get _bottomAppBar => BottomAppBar(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: AppColors.tweepink,
         child: _tabBar,
       );
 
@@ -282,6 +285,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       );
   Widget get _homeAppBar => SvgPicture.string(
         AppIcons.twitterLogo,
+        color: AppColors.tweepinkLight,
         height: 25,
       );
   Widget _searchField(String title) => SizedBox(
@@ -289,15 +293,18 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         child: TextField(
           maxLines: 1,
           decoration: InputDecoration(
+            fillColor: AppColors.white,
             filled: true,
             contentPadding: const EdgeInsets.only(left: 15),
             hintText: title,
-            hintStyle: Theme.of(context).textTheme.bodySmall,
+            hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.tweepinkLight,
+                ),
             prefixIcon: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: SvgPicture.string(
                 AppIcons.search,
-                color: AppColors.grey,
+                color: AppColors.tweepinkLight,
               ),
             ),
           ),
@@ -306,7 +313,10 @@ class _TwTabbarViewState extends State<TwTabbarView> {
 
   Widget get _notificationAppBar => Text(
         'Bildirimler',
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 26),
+        style: Theme.of(context)
+            .textTheme
+            .titleLarge
+            ?.copyWith(fontSize: 26, color: AppColors.white),
       );
 
   Widget _svgIcon(String icon) => SvgPicture.string(
@@ -315,6 +325,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         height: 24,
       );
   Widget get _navBarHeaderListTile => ListTile(
+        tileColor: AppColors.tweepinkLight,
         trailing: const Icon(Icons.add_circle_outline),
         title: SizedBox(
           height: 110,
@@ -330,8 +341,12 @@ class _TwTabbarViewState extends State<TwTabbarView> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Alihan Gedik'),
-                  const Text('@alihangedik'),
+                  const Text(
+                    'Alihan Gedik',
+                    style: TextStyle(color: AppColors.white),
+                  ),
+                  const Text('@alihangedik',
+                      style: TextStyle(color: AppColors.white)),
                   const SizedBox(
                     height: 10,
                   ),
@@ -363,7 +378,10 @@ class _TwTabbarViewState extends State<TwTabbarView> {
             ),
             title: Text(
               title,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.headline6?.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
           )
         ],
@@ -385,7 +403,7 @@ class _TwTabbarViewState extends State<TwTabbarView> {
       );
 
   Widget get _drawer => Drawer(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: AppColors.tweepinkLight,
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -477,16 +495,22 @@ class _TwTabbarViewState extends State<TwTabbarView> {
           color: AppColors.white,
           height: 22,
         ),
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(color: AppColors.white),
+        ),
       );
 
   Widget _expansionTile(String title) => Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          title: Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          iconColor: AppColors.white,
+          collapsedIconColor: AppColors.white,
+          title: Text(title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w500,
+                  )),
           children: [
             _drawerListtile('Profesyoneller İçin Twitter', AppIcons.rocket),
             _drawerListtile('Gelire Dönüştürme', AppIcons.cash)
@@ -494,5 +518,5 @@ class _TwTabbarViewState extends State<TwTabbarView> {
         ),
       );
   final TextStyle titleTextStyle =
-      const TextStyle(fontWeight: FontWeight.w800, color: Colors.black);
+      const TextStyle(fontWeight: FontWeight.w800, color: Colors.white);
 }

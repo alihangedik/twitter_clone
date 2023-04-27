@@ -55,7 +55,7 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
               ),
             );
           }),
-          tileColor: Theme.of(context).scaffoldBackgroundColor,
+          tileColor: Colors.white,
           leading: CircleAvatar(
             radius: 25,
             backgroundImage: NetworkImage(randomImageAvatar),
@@ -74,9 +74,9 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              listCardTitle('Alperen Özkan'),
+              listCardTitle('büşray.'),
               lowWidth,
-              listCardHandle('alperenozkan'),
+              listCardHandle('yilmazbbusra'),
               listCardTime(' ・ 16h'),
               lowWidth,
               const Icon(
@@ -104,11 +104,12 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
         style: Theme.of(context)
             .textTheme
             .bodySmall
-            ?.copyWith(color: AppColors.grey),
+            ?.copyWith(color: AppColors.tweepinkLight),
       );
   Widget listCardTime(String title) => Text(
         title,
-        style: Theme.of(context).textTheme.bodySmall,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: AppColors.tweepinkLight, fontWeight: FontWeight.w500),
       );
   Widget get _placeholder => SizedBox(
         height: 300,
@@ -153,7 +154,7 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
             }),
             child: SvgPicture.string(
               icon,
-              color: CupertinoColors.inactiveGray,
+              color: AppColors.tweepinkLight,
               height: 18,
             ),
           ),
@@ -162,10 +163,10 @@ class _TweetListState extends State<TweetList> with SpacesMixin {
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
-                color: AppColors.grey),
+                color: AppColors.tweepinkLight),
           ),
         ],
       );
   final TextStyle titleTextStyle =
-      const TextStyle(fontWeight: FontWeight.w800, color: AppColors.white);
+      TextStyle(fontWeight: FontWeight.w800, color: AppColors.tweepink);
 }

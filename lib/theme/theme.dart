@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-ThemeData themeDark = ThemeData.dark().copyWith(
+ThemeData themeDark = ThemeData.light().copyWith(
   buttonTheme: const ButtonThemeData(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -13,17 +13,16 @@ ThemeData themeDark = ThemeData.dark().copyWith(
     fillColor: AppColors.darkGrey,
     enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
-        borderSide: const BorderSide(color: AppColors.grey, width: 0.5)),
+        borderSide: BorderSide(color: AppColors.tweepinkLight, width: 0.5)),
     border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
         borderSide: const BorderSide(color: AppColors.darkGrey)),
   ),
-  dividerColor: AppColors.white.withOpacity(0.4),
-  scaffoldBackgroundColor: Colors.black,
-  iconTheme: const IconThemeData(color: Colors.white),
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.twitterBlue),
+  dividerColor: AppColors.tweepink.withOpacity(0.4),
+  iconTheme: IconThemeData(color: AppColors.tweepink),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(backgroundColor: AppColors.tweepink),
   appBarTheme: AppBarTheme(
-    backgroundColor: AppColors.black.withOpacity(0.8),
+    backgroundColor: AppColors.tweepink.withOpacity(1),
   ),
 );

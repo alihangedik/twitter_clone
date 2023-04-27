@@ -40,7 +40,7 @@ class _SubjectsState extends State<Subjects> {
                   ),
                   labelPadding: const EdgeInsets.only(bottom: 15),
                   indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor: AppColors.twitterBlue,
+                  indicatorColor: AppColors.tweepink,
                   tabs: const [
                     Text('Takip Edilenler'),
                     Text('Önerilenler'),

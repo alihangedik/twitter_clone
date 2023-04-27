@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/model/trends_model.dart';
 import 'package:twitter_clone/pages/notifications.dart';
+import 'package:twitter_clone/theme/colors.dart';
 
 class Search extends StatefulWidget {
   const Search(this.scrollController, {super.key});
@@ -17,7 +18,7 @@ class _SearchState extends State<Search> {
   void initState() {
     super.initState();
     _trendsModel = TrendsModel(
-        hashtag: '#usedevnet',
+        hashtag: '#askolukkazanacak',
         category: 'Gündemdekiler',
         tweetCount: '530B Tweet');
   }
@@ -33,7 +34,6 @@ class _SearchState extends State<Search> {
           physics: const AlwaysScrollableScrollPhysics(),
           controller: widget.scrollController,
           children: [
-            _headerImage,
             _headerText,
             listviewSeparated(),
           ],
@@ -60,14 +60,17 @@ class _SearchState extends State<Search> {
               children: [
                 Text(
                   _imageText,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                Text(
-                  _bigImageText,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(fontSize: 30, fontWeight: FontWeight.w900),
+                      ?.copyWith(color: AppColors.white),
+                ),
+                Text(
+                  _bigImageText,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.white),
                 ),
               ],
             ),
@@ -142,7 +145,7 @@ class _SearchState extends State<Search> {
   Widget get _headerText => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
         child: Text(
-          'Senin için trendler',
+          'Senin için trendler 💖',
           style: Theme.of(context)
               .textTheme
               .headline6

@@ -13,15 +13,15 @@ PreferredSizeWidget get tabBar => TabBar(
       ),
       indicatorWeight: 4,
       indicatorSize: TabBarIndicatorSize.label,
-      indicatorColor: AppColors.twitterBlue,
+      indicatorColor: AppColors.tweepinkLight,
       tabs: const [
         Tab(
             child: Text(
-          'Senin İçin',
+          'Senin İçin 🤍',
         )),
         Tab(
             child: Text(
-          'Takip Edilen',
+          'Takip Edilen  🤍',
         )),
       ],
     );

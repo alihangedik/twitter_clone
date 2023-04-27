@@ -53,8 +53,8 @@ mixin SubjectItemsMixin {
           child: Container(
             height: 30,
             width: 30,
-            decoration: const BoxDecoration(
-                color: AppColors.twitterBlue, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+                color: AppColors.tweepink, shape: BoxShape.circle),
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: SvgPicture.string(
@@ -145,9 +145,9 @@ mixin SubjectItemsMixin {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(title),
                   ),
-                  const Icon(
+                  Icon(
                     Icons.add,
-                    color: AppColors.twitterBlue,
+                    color: AppColors.tweepink,
                   ),
                   const VerticalDivider(
                     endIndent: 5,
@@ -189,7 +189,7 @@ mixin SubjectItemsMixin {
               height: 170,
               width: 300,
               decoration: BoxDecoration(
-                  color: AppColors.twitterBlue,
+                  color: AppColors.tweepink,
                   borderRadius: BorderRadius.circular(10)),
               child: const Center(
                   child: Text(

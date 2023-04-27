@@ -16,11 +16,11 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   goHome() async {
     Future.delayed(const Duration(seconds: 3), () {
-      // Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => Home(t),
-      //     ));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TwTabbarView(),
+          ));
     });
   }
 
@@ -33,13 +33,24 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.twitterBlue,
-      body: Center(
-        child: SvgPicture.string(
-          AppIcons.twitterLogo,
-          color: AppColors.white,
-          height: 85,
-        ),
+      backgroundColor: AppColors.tweepink,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: SvgPicture.string(
+              AppIcons.twitterLogo,
+              color: AppColors.white,
+              height: 85,
+            ),
+          ),
+          SizedBox(height: 20),
+          Text('Tweepink',
+              style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold))
+        ],
       ),
     );
   }

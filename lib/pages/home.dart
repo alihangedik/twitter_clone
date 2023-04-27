@@ -1,14 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/svg.dart';
-import 'package:twitter_clone/icons.dart';
 import 'package:twitter_clone/products/home_tabbar.dart';
 import 'package:twitter_clone/products/spaces.dart';
 import 'package:twitter_clone/products/tweet_list.dart';
 import 'package:twitter_clone/theme/colors.dart';
-
-import 'full_screen_image.dart';
 
 class Home extends StatefulWidget {
   const Home(this.controller, {super.key});
@@ -30,6 +25,7 @@ class _HomeState extends State<Home> with SpacesMixin {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: AppColors.white,
         appBar: AppBar(
           bottom: tabBar,
           toolbarHeight: 0,

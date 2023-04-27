@@ -88,6 +88,7 @@ class _FullScreenImageState extends State<FullScreenImage>
     }
 
     return Scaffold(
+      backgroundColor: AppColors.tweepinkLight,
       body: GestureDetector(
         onTap: (() {
           setState(() {
@@ -166,7 +167,7 @@ class _FullScreenImageState extends State<FullScreenImage>
   Widget get cardIconRow => Container(
         alignment: Alignment.topCenter,
         decoration: BoxDecoration(
-            color: Colors.black.withOpacity(isOnTap == true ? 0 : 0.7)),
+            color: AppColors.tweepink.withOpacity(isOnTap == true ? 0 : 0.7)),
         width: MediaQuery.of(context).size.width,
         height: 100,
         child: Padding(

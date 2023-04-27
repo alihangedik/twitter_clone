@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Twitter',
-        home: TwTabbarView(),
-        theme: themeDark);
+      debugShowCheckedModeBanner: false,
+      title: 'Tweepink',
+      home: Splash(),
+      theme: themeDark,
+    );
   }
 }

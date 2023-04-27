@@ -12,7 +12,7 @@ class Notifications extends StatefulWidget {
 }
 
 String randomImage = "https://picsum.photos/200/300";
-String twitterHandle = 'alperenozkan';
+String twitterHandle = 'büsray.';
 String cardTitle =
     'Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir.';
 
@@ -48,7 +48,7 @@ class _NotificationsState extends State<Notifications> {
             },
           ),
           indicatorWeight: 4,
-          indicatorColor: AppColors.twitterBlue,
+          indicatorColor: AppColors.tweepink,
           indicatorSize: TabBarIndicatorSize.label,
           tabs: const [
             Tab(child: Text('Tümü')),
@@ -88,9 +88,9 @@ class _NotificationsState extends State<Notifications> {
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge
-                            ?.copyWith(fontSize: 16),
+                            ?.copyWith(fontSize: 16, color: AppColors.tweepink),
                       ),
-                      const Text('tweetini beğendi'),
+                      const Text(' tweetini beğendi'),
                     ],
                   ),
                 ),

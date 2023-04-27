@@ -47,12 +47,17 @@ class _TweetDetailsState extends State<TweetDetails> {
       );
   Widget userListtile(name, handle) => ListTile(
         contentPadding: EdgeInsets.zero,
-        trailing: const Icon(Icons.more_vert_rounded),
+        trailing: Icon(
+          Icons.more_vert_rounded,
+          color: AppColors.tweepinkLight,
+        ),
         title: Wrap(
           direction: Axis.vertical,
           children: [
-            Text(name),
-            Text('@$handle'),
+            Text(name,
+                style: TextStyle(
+                    color: AppColors.tweepink, fontWeight: FontWeight.bold)),
+            Text('@$handle', style: TextStyle(color: AppColors.tweepinkLight)),
           ],
         ),
         leading: CircleAvatar(
@@ -84,7 +89,7 @@ class _TweetDetailsState extends State<TweetDetails> {
 
   Widget date(date) => Padding(
         padding: EdgeInsets.only(left: 22.0),
-        child: Text(date),
+        child: Text(date, style: TextStyle(color: AppColors.tweepink)),
       );
 
   Widget statisticInfoRow(views, like) => Padding(
@@ -93,8 +98,8 @@ class _TweetDetailsState extends State<TweetDetails> {
           spacing: 15,
           runAlignment: WrapAlignment.center,
           children: [
-            Text(views),
-            Text(like),
+            Text(views, style: TextStyle(color: AppColors.tweepink)),
+            Text(like, style: TextStyle(color: AppColors.tweepink)),
           ],
         ),
       );
@@ -104,7 +109,7 @@ class _TweetDetailsState extends State<TweetDetails> {
       child: Divider(
         endIndent: endIndent,
         indent: indent,
-        color: AppColors.white,
+        color: AppColors.tweepinkLight,
       ));
 
   Widget get bottomIcons => Row(
@@ -129,7 +134,7 @@ class _TweetDetailsState extends State<TweetDetails> {
             }),
             child: SvgPicture.string(
               icon,
-              color: CupertinoColors.inactiveGray,
+              color: AppColors.tweepink,
               height: 22,
             ),
           ),
@@ -138,11 +143,6 @@ class _TweetDetailsState extends State<TweetDetails> {
   AppBar get appbar {
     return AppBar(
       title: const Text('Tweet'),
-      bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(8),
-          child: Divider(
-            color: AppColors.white,
-          )),
       centerTitle: false,
     );
   }

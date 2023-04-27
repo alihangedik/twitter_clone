@@ -66,7 +66,7 @@ class _SearchSettingState extends State<SearchSetting> {
 
   Widget switchListTile(title, subtitle, value, onChanged) => SwitchListTile(
       contentPadding: EdgeInsets.all(10),
-      activeColor: AppColors.twitterBlue,
+      activeColor: AppColors.tweepink,
       title: Text(title),
       subtitle: Text(
         subtitle,
